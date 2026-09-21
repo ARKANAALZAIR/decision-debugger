@@ -297,7 +297,7 @@ decision-debugger/
 
 ## Roadmap
 
-### v1.4.1
+### v1.4.2
 
 - Production-hardened decision reasoning workflow
 - Decision framing and decomposition
