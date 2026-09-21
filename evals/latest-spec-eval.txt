@@ -1,0 +1,86 @@
+Specification cases: 16
+PASS: 16
+PARTIAL: 0
+Runtime Claude execution: NOT RUN
+[
+  {
+    "id": "T01",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T02",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T03",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T04",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T05",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T06",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T07",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T08",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T09",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T10",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T11",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T12",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T13",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T14",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T15",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T16",
+    "status": "PASS",
+    "missing": []
+  }
+]

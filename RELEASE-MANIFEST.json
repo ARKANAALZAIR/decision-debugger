@@ -1,0 +1,11 @@
+{
+  "name": "decision-debugger",
+  "version": "1.4.1",
+  "entrypoint": "SKILL.md",
+  "plugin_entrypoint": ".claude-plugin/plugin.json",
+  "file_count": 41,
+  "runtime_validation_claim": false,
+  "spec_eval_cases": 25,
+  "spec_eval_result": "PASS",
+  "skill_sha256": "fca9e3e6625c8ef1740b0e589908c957df6a1ec45bc36c9c45131ddf541fb6af"
+}

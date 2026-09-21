@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Decision Debugger canonical output",
+  "type": "object",
+  "required": [
+    "decision",
+    "executive_state",
+    "findings"
+  ],
+  "properties": {
+    "decision": {
+      "type": "object",
+      "properties": {
+        "statement": {},
+        "objective": {},
+        "constraints": {},
+        "options": {},
+        "owner": {},
+        "decision_rights": {},
+        "stakeholders": {},
+        "time_horizon": {},
+        "reversibility": {},
+        "stakes": {},
+        "mode": {}
+      }
+    },
+    "executive_state": {
+      "type": "object",
+      "required": [
+        "state",
+        "assessment_confidence"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "INSUFFICIENT EVIDENCE",
+            "CONTESTED",
+            "FRAGILE",
+            "CONDITIONAL",
+            "ROBUST"
+          ]
+        },
+        "assessment_confidence": {
+          "enum": [
+            "HIGH",
+            "MODERATE",
+            "LOW"
+          ]
+        },
+        "primary_vulnerability": {
+          "type": "string"
+        },
+        "decision_changing_finding": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "findings": {
+      "type": "array"
+    },
+    "evidence_audit": {
+      "type": "array"
+    },
+    "assumptions": {
+      "type": "array"
+    },
+    "dependencies": {
+      "type": "array"
+    },
+    "failure_modes": {
+      "type": "array"
+    },
+    "scenarios": {
+      "type": "array"
+    },
+    "alternatives": {
+      "type": "array"
+    },
+    "feasibility": {
+      "type": "object"
+    },
+    "stakeholder_agency": {
+      "type": "object"
+    },
+    "reversibility": {
+      "type": "object"
+    },
+    "decision_boundaries": {
+      "type": "array"
+    },
+    "reassessment_triggers": {
+      "type": "array"
+    },
+    "next_best_information": {
+      "type": "array"
+    },
+    "ledger": {
+      "type": "object"
+    },
+    "second_order_effects": {
+      "type": "array"
+    }
+  }
+}
