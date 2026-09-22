@@ -34,15 +34,24 @@ Problem: Rollback is assumed to be available but its operational and data-integr
 Impact: A failed migration could create a longer outage or data divergence.
 Recommended Action: Test rollback and restoration under production-like conditions.
 
-FAILURE MODE
+FAILURE MODE ANALYSIS
+FM-001 — Decision-Critical Execution Failure
 Trigger: Production differs materially from staging.
-→ Weak Point: Compatibility assumptions are based on incomplete testing.
-→ Failure: Migration encounters an untested dependency.
-→ Immediate Impact: Application errors.
-→ Secondary Impact: Customer-facing outage.
-→ Cascade: Partial migration → rollback complications → extended disruption.
-→ Early Warning: Production-like test failures, dependency mismatches, or rollback test failure.
-
+Upstream Link: ASSUMPTION — staging coverage represents production behavior.
+Vulnerable Dependency: Compatibility with production-only dependencies.
+Failure Mechanism: A dependency or data path behaves differently under real production conditions.
+Failure State: The migrated workload cannot operate at the required reliability.
+Direct Effect: Application errors or partial service disruption.
+Cascade: Partial migration → rollback complications → extended disruption.
+Common-Mode Driver: The same dependency can impair the staged alternative if testing uses the same incomplete fixture.
+Failure Interaction: FM-001 may AMPLIFY a resource/operational failure through incident load.
+Detection: LEADING — production-like test failure, dependency mismatch, or failed rollback rehearsal.
+Detection Window: Before broad rollout, if the pilot is representative.
+Prevention: Pilot on a bounded workload; test production-like dependencies; verify rollback.
+Containment: Stop rollout, isolate the affected workload, preserve the known-good path.
+Recovery / Exit: Roll back if data integrity remains intact; otherwise use the tested restoration path.
+Residual Vulnerability: Production behavior outside the tested envelope remains uncertain.
+Decision Boundary: Condition: pilot or rollback rehearsal exposes unresolved integrity/compatibility failure → Interpretation: control barrier is insufficient → Implication: pause, redesign, or stage.
 SECOND-ORDER EFFECTS
 Migration may change operational workload, vendor dependencies, monitoring requirements, and incident-response procedures.
 

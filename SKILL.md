@@ -419,21 +419,26 @@ Prioritize only dependencies that could materially change the decision.
 
 # 10. Failure Mode Analysis
 
-Failure Mode Analysis is a core decision-stress test, not a generic risk list.
-Its job is to answer:
+Failure Mode Analysis (FMA) is the decision's failure-engine. It is not a generic risk list and it is not a request to imagine every bad outcome.
+Its purpose is to model **how a live decision branch can fail, what dependency breaks, how the failure propagates, how it can be detected, where control exists, how recovery works, and whether the failure changes the decision.**
 
-> **If this decision fails, how exactly does the failure start, propagate, become detectable, and become recoverable — or not?**
+> **If this branch fails, show the mechanism — not just the danger. Then test whether the same failure driver can affect another branch.**
 
-Run FMA on every materially relevant option, including inaction / delay when those are real options. Do not only analyze the user's preferred option.
+Run FMA on every materially relevant live option, including inaction / delay when those are real branches. Do not only analyze the user's preferred option.
 
 ## 10.1 Failure-engine architecture
 
-Use the full chain:
+Build a failure map before writing the narrative. Use this canonical path:
 
 ```text
-OPTION / ACTION
+OPTION / BRANCH
+      ↓
+FAMILY + FAILURE CRITICALITY
       ↓
 TRIGGER / PRECONDITION
+      ↓
+UPSTREAM LINK
+(ASSUMPTION / DEPENDENCY / CONSTRAINT / EVIDENCE GAP / EXTERNAL RESPONSE)
       ↓
 VULNERABLE DEPENDENCY
       ↓
@@ -443,11 +448,13 @@ FAILURE STATE
       ↓
 DIRECT EFFECT
       ↓
-CASCADE / FEEDBACK
+CASCADE
+      ↓
+INTERACTION / COMMON-MODE DRIVER / FEEDBACK LOOP (if material)
       ↓
 TERMINAL CONSEQUENCE
       ↓
-DETECTION SIGNAL + DETECTION WINDOW
+DETECTION SIGNAL + SIGNAL TYPE + WINDOW
       ↓
 PREVENTION
       ↓
@@ -456,135 +463,223 @@ CONTAINMENT
 RECOVERY / EXIT
       ↓
 RESIDUAL VULNERABILITY
+      ↓
+DECISION BOUNDARY / REASSESSMENT TRIGGER (if supportable)
 ```
 
-Interpretation:
+### Field interpretation
 
-- `TRIGGER / PRECONDITION`: what has to happen, or already be true, for the failure path to activate;
-- `VULNERABLE DEPENDENCY`: assumption, resource, actor response, system dependency, timing, or constraint that can break;
-- `FAILURE MECHANISM`: the actual mechanism by which the plan stops working;
-- `FAILURE STATE`: what has become false, unavailable, or materially degraded;
-- `DIRECT EFFECT`: the first concrete consequence;
-- `CASCADE / FEEDBACK`: downstream consequences, interaction effects, or reinforcing loops;
-- `TERMINAL CONSEQUENCE`: the material consequence that matters to the objective, constraints, or reversibility of the decision;
-- `DETECTION SIGNAL`: an observable indicator that the failure path is beginning;
-- `DETECTION WINDOW`: how early the signal is likely to appear relative to irreversible damage, only when supported;
-- `PREVENTION`: what reduces the chance or severity before the trigger;
-- `CONTAINMENT`: what limits damage after the failure begins;
-- `RECOVERY / EXIT`: how the decision can be reversed, repaired, staged, or abandoned;
-- `RESIDUAL VULNERABILITY`: what remains exposed after mitigation.
+- `OPTION / BRANCH`: the action, alternative, or inaction path being tested.
+- `FAMILY`: the primary failure family. Do not force a family merely to make the output look complete.
+- `FAILURE CRITICALITY`: `DECISION-CRITICAL`, `DECISION-RELEVANT`, `MONITOR-ONLY`, or `NON-MATERIAL` when explicitly useful. This is qualitative, not a score.
+- `TRIGGER / PRECONDITION`: the event, condition, sequence, or pre-existing state that activates the path.
+- `UPSTREAM LINK`: what this failure traces back to. Use the strongest supported causal parent(s).
+- `VULNERABLE DEPENDENCY`: the thing the branch needs to remain true, available, affordable, executable, accepted, or reversible.
+- `FAILURE MECHANISM`: the causal mechanism that converts the broken dependency into failure. Never substitute a label such as `execution risk` for the mechanism.
+- `FAILURE STATE`: what is now false, unavailable, degraded, blocked, or materially different.
+- `DIRECT EFFECT`: the first concrete consequence.
+- `CASCADE`: downstream consequences that remain on the same failure path.
+- `INTERACTION`: a material relationship between distinct failure modes, such as amplification, cascading, masking, compensation, or shared exposure.
+- `COMMON-MODE DRIVER`: one external dependency or assumption capable of impairing multiple branches at once.
+- `FEEDBACK LOOP`: a failure interaction in which an effect feeds back into one or more upstream causes. Only assert a loop when the reciprocal mechanism is supportable.
+- `TERMINAL CONSEQUENCE`: the consequence at which further decomposition no longer changes the decision, objective, constraint, or reversibility.
+- `DETECTION SIGNAL`: an observable indicator that the path is beginning or has progressed.
+- `SIGNAL TYPE`: `LEADING`, `LAGGING`, or `UNKNOWN`. Leading signals appear before material damage; lagging signals confirm damage after it has begun.
+- `DETECTION WINDOW`: how much room exists to intervene before material or irreversible damage, only when supported.
+- `PREVENTION`: pre-trigger exposure reduction.
+- `CONTAINMENT`: post-trigger damage limitation.
+- `RECOVERY / EXIT`: repair, reverse, stage, abandon, or preserve optionality.
+- `RESIDUAL VULNERABILITY`: what remains exposed after the controls above.
+- `DECISION BOUNDARY / REASSESSMENT TRIGGER`: the observable condition that should alter, pause, stage, reverse, or revisit the branch.
 
-Do not invent probabilities for these fields.
+Use `UNKNOWN` rather than inventing a detection window, recovery path, mechanism, threshold, or probability. Do not invent probabilities, and do not assign a numeric risk score.
 
 ## 10.2 Failure-mode families
 
-Generate only the families that are materially relevant:
+Generate only materially relevant families:
 
 1. `PREMISE FAILURE` — a key assumption, evidence claim, or causal premise is false, weak, stale, or materially different from reality.
 2. `EXECUTION FAILURE` — the intended plan cannot be executed to the required standard.
 3. `RESOURCE / CONSTRAINT FAILURE` — money, time, capacity, runway, permissions, or another hard constraint becomes limiting.
 4. `TIMING / SEQUENCING FAILURE` — the decision is reasonable in isolation but wrong at this time or in this order.
 5. `RESPONSE / INTERACTION FAILURE` — customers, competitors, employers, partners, stakeholders, or systems respond differently than the plan requires.
-6. `MEASUREMENT / FEEDBACK FAILURE` — the chosen metric, feedback loop, or success signal gives a misleading indication and delays correction.
-7. `REVERSIBILITY / RECOVERY FAILURE` — a failure occurs after optionality has been lost, making recovery costly, slow, or unavailable.
+6. `MEASUREMENT / FEEDBACK FAILURE` — the chosen metric, feedback loop, or success signal is misleading, delayed, or contaminated and therefore delays correction.
+7. `REVERSIBILITY / RECOVERY FAILURE` — failure occurs after optionality has been lost, making recovery costly, slow, or unavailable.
 8. `COORDINATION / AUTHORITY FAILURE` — execution fails because ownership, consent, veto, incentives, or decision rights are unresolved.
 
 Do not force a family merely to make the list look complete.
 
-## 10.3 Failure-mode quality test
+## 10.3 Failure-mode materiality and criticality
 
-A failure mode is material only when it can change at least one of:
-- whether the option should be taken;
+A failure mode is material when it can change at least one of:
+- whether an option should be taken;
 - whether action should happen now versus later;
 - whether staging / pilot / partial commitment becomes preferable;
 - a critical decision condition;
-- the decision state.
+- the decision state;
+- the ability to recover or preserve optionality.
 
-A useful failure mode must identify all of the following:
+Classify only when supportable:
 
-```text
-ID
-OPTION / BRANCH
-FAMILY
-TRIGGER / PRECONDITION
-VULNERABLE DEPENDENCY
-FAILURE MECHANISM
-FAILURE STATE
-DIRECT EFFECT
-CASCADE
-TERMINAL CONSEQUENCE
-DETECTION SIGNAL
-DETECTION WINDOW (if supportable)
-PREVENTION
-CONTAINMENT
-RECOVERY / EXIT
-RESIDUAL VULNERABILITY
-DECISION RELEVANCE
-EVIDENCE / PROVENANCE
-```
+- `DECISION-CRITICAL`: failure can directly overturn, delay, stage, or materially restructure the decision.
+- `DECISION-RELEVANT`: failure changes a condition, mitigation, or monitoring requirement but does not by itself overturn the branch.
+- `MONITOR-ONLY`: useful to watch, but not currently decision-changing.
+- `NON-MATERIAL`: do not carry forward into the main report unless needed to explain a higher-level mechanism.
 
-Use `UNKNOWN` rather than inventing a detection window, recovery path, or mechanism.
+Do not convert these labels into numeric scores.
 
-## 10.4 Failure-mode symmetry test
+## 10.4 Failure-mode symmetry
 
-For each materially relevant option, compare:
+For each materially relevant branch, compare:
 
 ```text
-How can this option fail?
+How can this branch fail?
 How can the alternative fail?
 How can waiting / doing nothing fail?
-What failure is harder to detect?
-What failure is harder to contain?
-What failure destroys more optionality?
+Which failure is harder to detect?
+Which is harder to contain?
+Which is harder to recover from?
+Which destroys more optionality?
+Are any of the same failure drivers shared across branches?
 ```
 
-Do not assume that inaction is the safe branch. It has its own failure modes, usually through delay, drift, missed opportunity, deterioration, or dependency accumulation.
+Inaction is not a risk-free baseline. Its failure often appears through delay, drift, deterioration, missed opportunity, or dependency accumulation.
 
-## 10.5 Assumption-to-failure linkage
+## 10.5 Common-mode failure analysis
 
-Every material failure mode should trace backward to at least one:
+After mapping branch-specific failures, run a **common-mode check**:
+
+```text
+BRANCH A ──┐
+BRANCH B ──┼──> COMMON FAILURE DRIVER
+INACTION ──┘
+```
+
+Ask:
+- Do multiple branches depend on the same assumption?
+- Do multiple branches depend on the same external actor or market response?
+- Does the same resource constraint cap more than one option?
+- Does one evidence gap weaken several branches simultaneously?
+- Can one upstream shock make the alternatives look different while preserving the same root vulnerability?
+
+If yes, record the shared driver explicitly and do not count the branches as independent protection against that failure.
+
+## 10.6 Failure interaction and feedback-loop analysis
+
+Do not stop at separate failure chains when failure modes materially interact.
+
+Use only interactions that can change the decision or the severity / detectability / recoverability of a material failure. Supported relationship types are:
+
+- `CASCADING`: failure A directly triggers failure B;
+- `AMPLIFICATION`: failure A increases the magnitude or speed of failure B;
+- `MASKING`: one failure hides another, delaying detection;
+- `COMPENSATING`: one control or failure offsets another;
+- `COMMON-MODE`: distinct branches are impaired by the same upstream driver;
+- `FEEDBACK`: an effect feeds back and increases or decreases an upstream cause.
+
+Represent a feedback loop as:
+
+```text
+F1 → F2 → F3
+↑         ↓
+└─────────┘
+```
+
+For a feedback loop, identify:
+- the nodes / failure modes involved;
+- the direction of influence;
+- whether the loop is reinforcing or balancing;
+- the observable signal that indicates the loop is activating;
+- the intervention point with the highest practical control;
+- the activation signal and intervention point must be explicit when the loop is supportable.
+
+Do not invent a loop merely because two events can coexist. A loop requires a supportable mechanism by which a downstream effect changes an upstream driver.
+
+## 10.7 Failure-path deduplication
+
+Before presenting FMA:
+
+- merge failure modes that share the same trigger, mechanism, and material consequence;
+- do not create separate modes for wording variants of the same mechanism;
+- preserve distinct modes when the intervention point, detection path, or decision implication differs materially;
+- use interaction links instead of duplicating the same common-mode driver across every branch.
+
+The objective is **coverage without combinatorial explosion**.
+
+## 10.8 Assumption-to-failure linkage
+
+Every material failure mode should trace backward to one or more of:
 
 ```text
 ASSUMPTION
 DEPENDENCY
 CONSTRAINT
 EVIDENCE GAP
-STAKEHOLDER RESPONSE
+STAKEHOLDER / EXTERNAL RESPONSE
 ```
 
-If no upstream cause can be identified, label the mechanism as `INFERRED` or `UNKNOWN` rather than presenting it as established.
+If no upstream cause can be supported, label the mechanism `INFERRED` or `UNKNOWN` rather than presenting it as established.
 
-Conversely, every high-sensitivity assumption should be checked for a concrete failure mode unless clearly `NOT MATERIAL`.
+Conversely, every high-sensitivity assumption must be checked for a concrete failure path unless explicitly marked `NOT MATERIAL`.
 
-## 10.6 Early-warning and kill-switch discipline
+## 10.9 Early-warning and kill-switch discipline
 
-When an observable warning exists, convert it into an operational condition:
+This section is the early-warning and kill-switch discipline for FMA.
+
+## 10.9.1 Detection quality
+
+
+For each material failure, ask:
+
+```text
+What is the earliest observable signal?
+Is it leading or lagging?
+How much intervention room exists before material damage?
+Can the signal be directly measured or only inferred?
+```
+
+Then convert it into:
 
 ```text
 WARNING SIGNAL
-→ WHAT IT MEANS
-→ ACTION / REASSESSMENT TRIGGER
+→ CONDITION
+→ INTERPRETATION
+→ IMPLICATION / REASSESSMENT
 ```
 
-Prefer conditions that can be observed before the failure becomes expensive or irreversible.
+A monitoring statement is not mitigation unless the signal has a defined decision consequence.
 
 A `KILL-SWITCH / STOP CONDITION` may be stated only when it follows from the user's objective, constraints, authority, and verified evidence. Do not invent arbitrary thresholds.
 
-## 10.7 Mitigation must be typed
+## 10.10 Barrier analysis: prevent → contain → recover
 
-Separate mitigation into three stages:
+Treat controls as a chain of barriers, not a single mitigation bucket:
 
-- `PREVENT`: reduce exposure before the failure trigger;
-- `CONTAIN`: limit damage after the failure begins;
-- `RECOVER`: restore the objective, preserve optionality, or exit the branch.
+```text
+PREVENTION BARRIER
+      ↓ fails
+TRIGGER
+      ↓
+CONTAINMENT BARRIER
+      ↓ fails
+MATERIAL FAILURE
+      ↓
+RECOVERY / EXIT BARRIER
+```
 
-Do not label a generic action such as "monitor closely" as mitigation unless the monitoring signal has a defined decision consequence.
+For each material failure mode, ask:
+- What prevents activation?
+- If prevention fails, what limits damage?
+- If containment fails, what preserves the ability to recover or exit?
+- Which barrier is weakest or unsupported?
 
-## 10.8 Failure-mode priority without pseudo-precision
+Do not label `monitor closely` as prevention, containment, or recovery unless the monitor has an explicit control consequence.
 
-Do not assign a numeric risk score or multiply subjective likelihood × severity.
+## 10.11 Failure-mode priority without pseudo-precision
 
-Instead, emphasize qualitative decision relevance using:
+Do not assign numeric risk scores or multiply subjective likelihood × severity.
+
+Use:
 
 - `DECISION-CHANGING`: YES / NO / UNKNOWN;
 - `DETECTABILITY`: EARLY / MID-COURSE / LATE / UNKNOWN;
@@ -593,9 +688,9 @@ Instead, emphasize qualitative decision relevance using:
 
 A failure with low detectability, low recoverability, and high optionality loss deserves explicit attention even without a probability estimate.
 
-## 10.9 Failure mode to decision boundary
+## 10.12 Failure mode to decision boundary
 
-For each material failure mode, ask whether the trigger can become a decision boundary or reassessment trigger:
+For each `DECISION-CRITICAL` or materially `DECISION-CHANGING` failure, ask whether its signal should become a boundary or reassessment trigger:
 
 ```text
 FAILURE SIGNAL
@@ -604,15 +699,36 @@ FAILURE SIGNAL
 → IMPLICATION
 ```
 
-This links FMA to Decision Boundaries and Reassessment Triggers instead of leaving failure analysis as descriptive prose.
+A decision boundary should be observable, materially relevant, and linked to the branch it governs. If no supportable threshold exists, state the uncertainty rather than fabricating one.
 
-## 10.10 Failure-mode stopping rules
+## 10.13 FMA completeness check
+
+Before finalizing, verify:
+
+```text
+□ Each live branch has material failure coverage.
+□ Inaction / delay was tested when material.
+□ Each material failure has a mechanism, not just a label.
+□ Each material failure has an upstream link.
+□ Common-mode drivers were checked.
+□ Material failure interactions were checked.
+□ Feedback loops were checked and only asserted when mechanistically supported.
+□ Detection signal and intervention window are explicit or UNKNOWN.
+□ Prevent / contain / recover are kept distinct.
+□ Residual vulnerability is explicit.
+□ Decision-changing failures connect to boundaries / reassessment where supportable.
+□ Duplicate failure modes were merged.
+□ No unsupported probabilities or numeric risk scores were introduced.
+```
+
+## 10.14 Failure-mode stopping rules
 
 Stop decomposition when:
 - the terminal consequence is decision-relevant and sufficiently concrete;
 - additional cascade steps merely restate the same mechanism;
 - the evidence ceiling is reached;
 - the branch no longer changes the decision or a decision condition;
+- the interaction adds no new decision-relevant information;
 - analysis cost exceeds plausible information value.
 
 Do not recursively model every imaginable downstream event.
@@ -1306,6 +1422,11 @@ Before final output, verify:
 - Did I run the failure-mode symmetry test across materially relevant options / inaction?
 - Did each material failure mode include trigger, mechanism, cascade, detection, prevention, containment, and recovery / exit where supportable?
 - Did I distinguish premise, execution, resource, timing, interaction, measurement, reversibility, and coordination failures when relevant?
+- Did I run a common-mode failure check across branches?
+- Did I check material failure interactions and feedback loops without inventing unsupported loops?
+- Did I merge duplicate failure modes and preserve only decision-relevant mechanisms?
+- Did I distinguish leading vs lagging detection signals where supportable?
+- Did I inspect prevention, containment, and recovery / exit as separate barriers?
 - Did I avoid fabricated probabilities and arbitrary risk scores?
 - Did material failure signals feed decision boundaries or reassessment triggers where appropriate?
 - Did I inspect material second-order effects?

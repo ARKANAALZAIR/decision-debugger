@@ -123,34 +123,25 @@ Validate the revenue timeline against comparable evidence and
 construct a downside runway scenario.
 
 FAILURE MODE ANALYSIS
-Family: RESOURCE / CONSTRAINT FAILURE
-Trigger:
-Revenue validation takes substantially longer than planned.
-↓
-Vulnerable Dependency:
-Runway planning depends on the six-month validation assumption.
-↓
-Failure Mechanism:
-Revenue stays below the level needed to maintain the original runway.
-↓
-Failure State:
-The available financial buffer becomes materially shorter than planned.
-↓
-Cascade:
-Cash pressure → short-term optimization → scope changes
-→ execution focus decreases → validation slows further.
-↓
-Detection Signal:
-Burn rate or validation progress diverges from the operating plan.
-↓
-Prevention:
-Validate the timeline and model explicit downside runway conditions.
-Containment:
-Use predefined evidence-based conditions to reduce spend or alter scope.
-Recovery / Exit:
-Preserve the option to return to income, reduce burn, or stage the transition.
-Residual Vulnerability:
-The true validation timeline remains uncertain.
+FM-001 — Decision-Critical Resource / Constraint Failure
+Trigger: Revenue validation takes materially longer than planned.
+Upstream Link: ASSUMPTION — the six-month validation timeline.
+Vulnerable Dependency: Runway planning depends on that timeline remaining within the available buffer.
+Failure Mechanism: Revenue stays below the level required to support the planned burn.
+Failure State: The usable runway is materially shorter than the plan assumes.
+Direct Effect: Cash pressure rises before the intended milestone is reached.
+Cascade: Cash pressure → short-term optimization → scope changes → execution focus falls → validation slows further.
+Common-Mode Driver: Runway and revenue timing also constrain the staged alternative.
+Failure Interaction: FM-001 AMPLIFIES execution pressure, which can create a secondary execution failure.
+Feedback Loop: REINFORCING — cash pressure reduces execution capacity; lower execution capacity slows validation; slower validation increases cash pressure.
+Terminal Consequence: The full-time transition becomes infeasible under the original plan.
+Detection: LEADING — burn or validation progress diverges from the operating plan.
+Detection Window: Before the minimum operating buffer is crossed, if the operating data are tracked consistently.
+Prevention: Validate the timeline; model downside runway; cap commitment until evidence strengthens.
+Containment: Reduce burn, narrow scope, or stage the transition when predefined conditions are met.
+Recovery / Exit: Preserve the option to return to income, reduce burn, or pause the full-time branch.
+Residual Vulnerability: The true validation timeline remains uncertain.
+Decision Boundary: Condition: runway or validation progress materially crosses the operating boundary → Interpretation: the original full-time assumption is no longer holding → Implication: reassess, stage, or exit.
 
 ALTERNATIVE ANALYSIS
 Option A — Full-time transition
@@ -312,6 +303,13 @@ decision-debugger/
 ```
 
 ## Roadmap
+
+### v1.6.0
+
+- Full FMA upgrade: common-mode failure analysis, material failure interactions, supportable feedback loops, failure criticality, signal typing, barrier analysis, deduplication, and decision-boundary linkage
+- Canonical examples synchronized with the machine-readable FMA schema
+- Expanded FMA specification coverage and release validation
+
 
 ### v1.4.2
 

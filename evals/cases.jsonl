@@ -35,3 +35,8 @@
 {"id": "T35", "domain": "failure_mode_detection", "prompt": "Turn early warning signals into observable reassessment or decision-boundary conditions.", "expect": ["fma_warning_trigger", "fma_decision_boundary"]}
 {"id": "T36", "domain": "failure_mode_uncertainty", "prompt": "Do not invent failure probabilities, detection windows, recovery paths, or numeric risk scores when evidence is absent.", "expect": ["fma_no_pseudo_precision", "fma_unknowns"]}
 {"id": "T37", "domain": "failure_mode_linkage", "prompt": "Trace material failure modes back to assumptions, dependencies, constraints, evidence gaps, or external responses.", "expect": ["fma_upstream_link"]}
+{"id": "T38", "domain": "failure_common_mode", "prompt": "Test whether a shared dependency can make multiple decision branches fail at once.", "expect": ["fma_common_mode", "fma_shared_driver"]}
+{"id": "T39", "domain": "failure_interaction", "prompt": "Model material interactions between failure modes without generating a combinatorial risk graph.", "expect": ["fma_interactions", "fma_dedup"]}
+{"id": "T40", "domain": "failure_feedback", "prompt": "Check whether a reinforcing feedback loop exists in the failure path and identify its activation signal and intervention point only if supportable.", "expect": ["fma_feedback", "fma_intervention_point"]}
+{"id": "T41", "domain": "failure_criticality", "prompt": "Classify failure modes by decision-critical, decision-relevant, monitor-only, or non-material without numeric risk scores.", "expect": ["fma_criticality", "fma_no_numeric"]}
+{"id": "T42", "domain": "failure_detection_barriers", "prompt": "Distinguish leading vs lagging signals and analyze prevention, containment, and recovery as separate barriers.", "expect": ["fma_signal_type", "fma_barriers"]}

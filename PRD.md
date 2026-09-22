@@ -1,6 +1,6 @@
 # PRD — DECISION DEBUGGER
 
-**Version:** 1.5.0  
+**Version:** 1.6.0  
 **Status:** Production Package  
 **Product Type:** Claude Agent Skill  
 **Tagline:** Debug your decisions before reality does.
@@ -15,7 +15,7 @@ It evaluates a connected chain:
 
 ```text
 OBJECTIVE → CONSTRAINTS → OPTIONS → EVIDENCE → ASSUMPTIONS
-→ REASONING → DEPENDENCIES → FAILURE MODES → SCENARIOS
+→ REASONING → DEPENDENCIES → FAILURE MODES → FAILURE INTERACTIONS → SCENARIOS
 → ALTERNATIVES → FEASIBILITY → STAKEHOLDERS / AGENCY
 → REVERSIBILITY → DECISION BOUNDARIES → REASSESSMENT
 ```
@@ -204,6 +204,11 @@ LEDGER
 - **FR-07** Dependency / Sensitivity Mapping
 - **FR-08** Failure Mode Analysis
   - model trigger / precondition, vulnerable dependency, mechanism, failure state, cascade, terminal consequence, detection, prevention, containment, and recovery / exit
+  - classify failure criticality without numeric risk scoring
+  - run common-mode failure analysis across branches and distinguish shared upstream drivers from branch-specific failures
+  - model only decision-relevant failure interactions and supportable feedback loops
+  - distinguish leading vs lagging detection signals and connect decision-critical failures to boundaries / reassessment triggers
+  - deduplicate failure paths that share the same mechanism while preserving distinct intervention and decision implications
   - analyze each materially relevant option and inaction / delay where material
   - distinguish premise, execution, resource, timing, interaction, measurement, reversibility, and coordination failure families when relevant
   - link failure modes to assumptions, dependencies, constraints, evidence gaps, or external responses

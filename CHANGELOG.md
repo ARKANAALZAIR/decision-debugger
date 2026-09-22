@@ -1,3 +1,24 @@
+## 1.6.0 — Full Failure Mode Analysis Upgrade
+
+### Added
+- common-mode failure analysis across action, alternative, and inaction branches
+- material failure interactions: cascading, amplification, masking, compensating, common-mode, and feedback
+- supportable feedback-loop mapping with activation signal and intervention point
+- qualitative failure criticality classes without numeric risk scoring
+- leading vs lagging detection signal typing
+- barrier analysis across prevention, containment, and recovery / exit
+- failure-path deduplication rules to prevent combinatorial explosion
+- canonical decision-boundary linkage for decision-critical failures
+- synchronized human-readable examples and machine-readable failure-mode schema
+- regression/specification cases for common-mode drivers, interactions, loops, criticality, barriers, and signal typing
+
+### Fixed / strengthened
+- aligned examples with the canonical FMA engine rather than the legacy short cascade format
+- prevents superficial branch diversity from being mistaken for independent protection against a shared failure driver
+- prevents correlation from being mislabeled as a feedback loop
+- prevents duplicate failure paths from bloating the analysis
+- separates monitoring signals from actual prevention / containment / recovery controls
+
 # Changelog
 
 ## 1.5.0 — Failure Mode Engine Hardening

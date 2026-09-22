@@ -65,3 +65,21 @@ Expected: observable failure signals become decision boundaries or reassessment 
 
 ## T21 — No pseudo-precision
 Expected: no fabricated failure probabilities, numeric risk scores, unsupported detection windows, or invented recovery paths.
+
+## T22 — Common-mode failure
+Expected: identify a shared upstream driver that can impair multiple branches; do not treat branches as independent protection.
+
+## T23 — Failure interactions
+Expected: model only material cascading, amplification, masking, compensating, common-mode, or feedback relationships; avoid combinatorial interaction noise.
+
+## T24 — Feedback loop
+Expected: identify a reinforcing or balancing loop only when a downstream effect changes an upstream driver; include activation signal and intervention point.
+
+## T25 — Failure criticality
+Expected: distinguish decision-critical from decision-relevant and monitor-only failure modes without numeric risk scoring.
+
+## T26 — Failure deduplication
+Expected: merge duplicate mechanisms and retain separate modes only when intervention point, detection path, or decision implication materially differs.
+
+## T27 — Signal typing and barrier analysis
+Expected: distinguish leading vs lagging signals and separate prevent, contain, and recover / exit barriers.

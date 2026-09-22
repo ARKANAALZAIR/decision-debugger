@@ -65,6 +65,16 @@ MARKERS = {
     "fma_no_pseudo_precision": ["Do not invent probabilities", "Do not assign a numeric risk score"],
     "fma_unknowns": ["Use `UNKNOWN` rather than inventing a detection window", "recovery path"],
     "fma_upstream_link": ["Assumption-to-failure linkage", "ASSUMPTION", "DEPENDENCY", "EVIDENCE GAP"],
+    "fma_common_mode": ["Common-mode failure analysis", "shared"],
+    "fma_shared_driver": ["COMMON FAILURE DRIVER", "multiple branches"],
+    "fma_interactions": ["Failure interaction and feedback-loop analysis", "AMPLIFICATION", "MASKING"],
+    "fma_dedup": ["Failure-path deduplication", "coverage without combinatorial explosion"],
+    "fma_feedback": ["FEEDBACK", "reinforcing or balancing"],
+    "fma_intervention_point": ["intervention point", "activation signal"],
+    "fma_criticality": ["FAILURE CRITICALITY", "DECISION-CRITICAL", "MONITOR-ONLY"],
+    "fma_no_numeric": ["Do not convert these labels into numeric scores", "Do not assign numeric risk scores"],
+    "fma_signal_type": ["SIGNAL TYPE", "LEADING", "LAGGING"],
+    "fma_barriers": ["Barrier analysis", "PREVENTION BARRIER", "CONTAINMENT BARRIER", "RECOVERY / EXIT BARRIER"],
 }
 
 def contains_all(text: str, terms):

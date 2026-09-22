@@ -33,14 +33,24 @@ Recommended Action: Separate price, valuation, thesis evidence, and invalidation
 EVIDENCE AUDIT
 Check whether supporting evidence is independent, current, relevant to the thesis, and contradicted by any material disconfirming evidence.
 
-FAILURE MODE
+FAILURE MODE ANALYSIS
+FM-001 — Decision-Critical Premise Failure
 Trigger: A material thesis assumption deteriorates.
-→ Weak Point: The position-sizing decision relies on the thesis remaining valid.
-→ Failure: Exposure increases while the thesis is weakening.
-→ Immediate Impact: Capital concentration increases.
-→ Secondary Impact: Portfolio flexibility decreases.
-→ Cascade: Higher exposure → greater sensitivity to thesis failure → reduced optionality.
-
+Upstream Link: ASSUMPTION — the thesis remains supported by current evidence.
+Vulnerable Dependency: Position sizing depends on thesis validity.
+Failure Mechanism: Exposure remains elevated while the thesis is weakening.
+Failure State: Capital concentration no longer matches the current evidence base.
+Direct Effect: Loss sensitivity increases while flexibility decreases.
+Cascade: Weaker thesis → higher relative exposure → reduced optionality → slower willingness to reassess.
+Common-Mode Driver: The thesis evidence and the “buy the dip” rationale may rely on the same upstream market narrative.
+Failure Interaction: FM-001 can be MASKED by short-term price recovery even while the underlying thesis deteriorates.
+Detection: LEADING — disconfirming evidence or a thesis-invalidating indicator appears before a major price move, if observable.
+Detection Window: UNKNOWN unless a concrete invalidation indicator is established.
+Prevention: Define thesis-invalidating evidence before adding exposure; stage commitments.
+Containment: Cap concentration or pause further additions when invalidation evidence appears.
+Recovery / Exit: Reduce exposure or exit when the user-defined thesis condition is materially invalidated.
+Residual Vulnerability: Market behavior can remain noisy even when the thesis is weakening.
+Decision Boundary: Condition: verified evidence materially invalidates a critical thesis premise → Interpretation: the original position thesis no longer holds → Implication: reassess sizing or maintain no-action until evidence improves.
 ALTERNATIVES
 - maintain position
 - reduce position
