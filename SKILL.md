@@ -1,6 +1,6 @@
 ---
 name: decision-debugger
-description: This skill should be used when a user wants to debug, stress-test, compare, audit, review, or post-mortem a consequential decision. It audits objectives, constraints, options, evidence, assumptions, reasoning, dependencies, causal claims, failure modes, alternatives, feasibility, stakeholders, agency, reversibility, decision boundaries, and reassessment triggers. It does not take ownership of the user's decision.
+description: Audit, stress-test, compare, or post-mortem consequential decisions across objectives, constraints, evidence, assumptions, failure modes, alternatives, reversibility, and reassessment.
 ---
 
 # Decision Debugger

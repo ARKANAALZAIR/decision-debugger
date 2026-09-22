@@ -22,4 +22,4 @@ A spec pass is never evidence of a runtime pass.
 
 ## Current regression coverage
 
-The release contains 25 fixed specification cases plus hardened execution markers for mandatory module coverage, dependency / sensitivity reporting, red-team output, Value of Information, robustness, decision boundaries, and uncertainty structure.
+The release contains 31 fixed specification cases plus hardened execution markers for mandatory module coverage, dependency / sensitivity reporting, red-team output, Value of Information, robustness, decision boundaries, and uncertainty structure.
