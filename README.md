@@ -184,15 +184,27 @@ the revenue assumptions.
 
 ### Claude.ai
 
-Anthropic documents custom Skills as folders containing a `SKILL.md` plus optional bundled resources. To upload this skill in Claude.ai, zip the `decision-debugger/` folder so it is the single top-level entry in the ZIP, then use the applicable **Customize → Skills → Create/Upload** flow in your Claude account.
+This package is a standalone Agent Skill with exactly one `SKILL.md` at the skill directory root. Zip the `decision-debugger/` folder so it is the single top-level entry in the ZIP, then upload it through the applicable **Customize → Skills → Create/Upload** flow in Claude.
 
 ### Claude Code
 
-Claude Code can use the standalone skill by placing the skill folder under `~/.claude/skills/` for a personal skill or `.claude/skills/` for a project skill, with `SKILL.md` at the skill directory root. The repository also contains the supporting command and validation files used by this package.
+For a project skill, place the repository's `SKILL.md` in:
+
+```text
+.claude/skills/decision-debugger/SKILL.md
+```
+
+For a personal skill, use:
+
+```text
+~/.claude/skills/decision-debugger/SKILL.md
+```
+
+You can copy the same `SKILL.md` from this repository into that path; the repository contains a helper installer at `scripts/install_claude_code.sh`.
 
 ### API / other Agent Skills-compatible runtimes
 
-For Skills-compatible runtimes, preserve the standard skill directory structure and keep `SKILL.md` at the directory root. Follow the host platform's current registration or upload mechanism.
+Preserve the standalone skill directory with `SKILL.md` at its root and follow the host runtime's current registration or upload mechanism.
 
 ## Usage
 
@@ -311,7 +323,7 @@ decision-debugger/
 - Rapid, Standard, Deep, and Post-Mortem modes
 - Untrusted-content isolation and verification-freshness controls
 - Canonical machine-readable output contract
-- Regression cases, specification evaluation, templates, and references
+- Regression cases, specification evaluation, templates, references, and a Claude Code install helper
 
 ### Future
 

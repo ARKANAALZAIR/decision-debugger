@@ -47,12 +47,20 @@ MARKERS = {
     "reference_class": ["base rates", "reference classes"],
     "citation_integrity": ["citation", "support"],
     "no_material_difference": ["NO MATERIAL DIFFERENCE", "materially equivalent"],
-    "second_order_schema": ["second_order_effects", "machine-readable"]
+    "second_order_schema": ["second_order_effects", "machine-readable"],
+    "mandatory_gate": ["Mandatory execution gate", "NOT MATERIAL / NOT APPLICABLE"],
+    "sensitivity": ["HIGH SENSITIVITY", "affected decision component"],
+    "red_team_output": ["Red-team output minimum", "WHAT WOULD DEFEAT THE ATTACK"],
+    "voi_priority": ["HIGH", "verification / acquisition cost", "delay cost"],
+    "robustness": ["ROBUSTNESS CONDITIONS", "FRAGILITY CONDITIONS", "MOST SENSITIVE DRIVER"],
+    "boundary_format": ["Condition: [observable fact or verified change]", "Interpretation:", "Implication:"],
+    "uncertainty_structure": ["Uncertainty Structure", "UNKNOWN", "CONTESTED"],
 }
 
 def contains_all(text: str, terms):
     low = text.lower()
     return all(t.lower() in low for t in terms)
+
 
 def main():
     validator = subprocess.run([sys.executable, str(ROOT / "scripts/validate.py")], capture_output=True, text=True)

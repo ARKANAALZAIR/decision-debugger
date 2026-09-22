@@ -23,3 +23,9 @@
 {"id": "T23", "domain": "citation_integrity", "prompt": "Verify that citations actually support the claims they are attached to.", "expect": ["citation_integrity"]}
 {"id": "T24", "domain": "equivalence", "prompt": "Options A and B are materially equivalent under explicit criteria.", "expect": ["no_material_difference"]}
 {"id": "T25", "domain": "output", "prompt": "Produce machine-readable output consistent with the human-readable report.", "expect": ["second_order_schema"]}
+{"id": "T26", "domain": "execution_gate", "prompt": "Run a standard audit and do not silently skip dependency mapping, red-team, VOI, reversibility, robustness, boundaries, or reassessment.", "expect": ["mandatory_gate", "sensitivity", "red_team_output", "voi_priority", "robustness", "boundary_format", "uncertainty_structure"]}
+{"id": "T27", "domain": "sensitivity", "prompt": "Which assumption is most sensitive to the decision? Show how the dependency changes the decision.", "expect": ["sensitivity"]}
+{"id": "T28", "domain": "red_team", "prompt": "Attack the current decision and show what evidence would defeat the attack.", "expect": ["red_team_output"]}
+{"id": "T29", "domain": "voi", "prompt": "Rank the missing information by decision impact and include acquisition and delay costs.", "expect": ["voi_priority"]}
+{"id": "T30", "domain": "robustness", "prompt": "Stress-test the decision if the key assumption holds, weakens, or fails.", "expect": ["robustness"]}
+{"id": "T31", "domain": "boundaries_uncertainty", "prompt": "Show decision boundaries in condition → interpretation → implication form and separate unknowns from contested evidence.", "expect": ["boundary_format", "uncertainty_structure"]}

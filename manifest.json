@@ -1,8 +1,9 @@
 {
   "name": "decision-debugger",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "entrypoint": "SKILL.md",
-  "plugin_entrypoint": ".claude-plugin/plugin.json",
   "runtime_validation_claim": false,
-  "spec_validation_command": "python scripts/run_spec_eval.py"
+  "spec_validation_command": "python scripts/run_spec_eval.py",
+  "distribution": "universal-standalone-agent-skill",
+  "claude_code_install": "scripts/install_claude_code.sh"
 }

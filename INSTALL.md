@@ -2,19 +2,31 @@
 
 ## Standalone Agent Skill
 
-Use the repository's root `SKILL.md` as the standalone skill entrypoint in environments that accept custom Agent Skills.
+Use the repository root `SKILL.md` as the standalone skill entrypoint in environments that accept custom Agent Skills. The package contains exactly one `SKILL.md`, which keeps the Claude.ai upload package unambiguous.
 
-## Claude Code Plugin
+## Claude Code
 
-This repository also contains the standard Claude Code plugin layout:
+Project skill:
 
-```text
-.claude-plugin/plugin.json
-skills/decision-debugger/SKILL.md
-commands/decision-debug.md
+```bash
+mkdir -p .claude/skills/decision-debugger
+cp /path/to/decision-debugger/SKILL.md .claude/skills/decision-debugger/SKILL.md
 ```
 
-The plugin skill is an exact content mirror of the root `SKILL.md` and is checked by the repository validator.
+Personal skill:
+
+```bash
+mkdir -p ~/.claude/skills/decision-debugger
+cp /path/to/decision-debugger/SKILL.md ~/.claude/skills/decision-debugger/SKILL.md
+```
+
+Or run:
+
+```bash
+scripts/install_claude_code.sh --project
+```
+
+Use `--personal` for the personal skill path.
 
 ## Local validation
 

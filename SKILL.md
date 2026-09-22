@@ -73,6 +73,50 @@ Never:
 
 Be diagnostic, traceable, conditional, and proportional to the stakes.
 
+### Mandatory execution gate
+
+For `STANDARD`, `DEEP`, and `POST-MORTEM` modes, do not silently omit a core module.
+For each core module below, either execute it or explicitly mark it `NOT MATERIAL / NOT APPLICABLE` and give a one-line reason:
+
+```text
+Decision Framing
+Decision Decomposition
+Reasoning Audit
+Evidence Audit
+Assumption Registry
+Dependency / Sensitivity Mapping
+Failure Mode Analysis
+Red-Team Challenge
+Causal Identification Check (when causal claims are material)
+Scenario Analysis
+Alternative Analysis
+Feasibility Audit
+Stakeholder / Decision Rights / Agency
+Second-Order Effects
+Value of Information
+Reversibility / Optionality
+Decision Robustness
+Decision Boundaries
+Reassessment Triggers
+```
+
+If a module is skipped because the necessary evidence is unavailable, report the evidence gap rather than replacing the module with generic commentary.
+
+### Required output discipline
+
+A standard or deep report must surface the following decision-critical outputs explicitly when material:
+
+1. the most sensitive assumptions / dependencies;
+2. at least one explicit red-team challenge;
+3. the highest-value missing information;
+4. reversibility and optionality;
+5. the robustness conditions that make the decision more or less stable;
+6. decision boundaries in `condition → interpretation → implication` form;
+7. reassessment triggers; and
+8. unresolved uncertainty.
+
+Do not bury these items in prose when they are decision-relevant.
+
 ---
 
 # 2. Modes
@@ -361,6 +405,14 @@ Identify:
 - resource contention
 - sensitivity boundaries
 
+Then explicitly rank the material dependencies qualitatively:
+- `HIGH SENSITIVITY` — small change could materially alter the decision;
+- `MODERATE SENSITIVITY` — meaningful change could alter a major branch;
+- `LOW SENSITIVITY` — unlikely to change the decision under current constraints.
+
+For each high-sensitivity dependency, state:
+`dependency → affected decision component → what changes if it weakens → what evidence would test it`.
+
 Prioritize only dependencies that could materially change the decision.
 
 ---
@@ -416,6 +468,14 @@ Ask:
 - What verified fact would materially change the decision?
 
 The red-team must remain evidence-based and proportionate.
+
+### Red-team output minimum
+
+Report at least one concrete attack when the module is material:
+- `ATTACK`: strongest evidence-based case against the current reasoning;
+- `TARGET`: assumption, evidence, causal link, or constraint being attacked;
+- `WHAT WOULD DEFEAT THE ATTACK`: evidence or clarification that would materially weaken the objection;
+- `STATUS`: survives / weakened / unresolved.
 
 ---
 
@@ -592,6 +652,14 @@ Qualitatively prioritize by:
 
 Do not invent numeric VOI unless a defensible model and inputs exist.
 
+When multiple information gaps exist, rank the top missing information qualitatively:
+- `HIGH`: resolving it could materially change the option, timing, or decision state;
+- `MEDIUM`: useful for reducing uncertainty but unlikely to change the decision by itself;
+- `LOW`: informative but unlikely to alter the decision.
+
+For each `HIGH` item, state:
+`information needed → decision uncertainty it resolves → expected decision impact → verification / acquisition cost → delay cost`.
+
 ---
 
 # 19. Reversibility / Optionality
@@ -607,6 +675,12 @@ Inspect:
 - waiting cost
 
 Irreversible or difficult-to-reverse actions generally warrant stronger evidence and boundary checks when timing permits. Do not turn that heuristic into a universal formula.
+
+For material decisions, explicitly summarize:
+- what is easy to reverse;
+- what is costly to reverse;
+- what becomes unavailable after commitment;
+- whether a staged, pilot, delay, or partial commitment preserves optionality.
 
 ---
 
@@ -658,6 +732,24 @@ Use only when all material gates are satisfied:
 
 There is no overall numeric score.
 
+### Robustness stress test
+
+After assigning the decision state, stress-test the reasoning against the material high-sensitivity assumptions:
+
+```text
+IF assumption holds → current reasoning branch
+IF assumption weakens → affected branch
+IF assumption fails  → alternative / delay / pilot implication
+```
+
+Summarize:
+- `ROBUSTNESS CONDITIONS`: what must remain true for the reasoning to remain coherent;
+- `FRAGILITY CONDITIONS`: what small or plausible change would materially weaken it;
+- `MOST SENSITIVE DRIVER`: the single dependency with the largest decision impact, when identifiable;
+- `UNRESOLVED`: what prevents a stronger robustness state.
+
+Robustness is about stability of the reasoning under plausible changes, not confidence that the outcome will succeed.
+
 ---
 
 # 21. Decision-Changing Test
@@ -682,6 +774,18 @@ State:
 - what evidence would invalidate a critical assumption
 
 Use conditional language.
+
+### Decision-boundary format
+
+For each material boundary, prefer:
+
+```text
+Condition: [observable fact or verified change]
+Interpretation: [what the change says about the reasoning]
+Implication: [how the option, timing, or decision state changes]
+```
+
+Do not invent numeric thresholds solely for presentation. Use user-provided or externally supported thresholds when available; otherwise describe the threshold qualitatively.
 
 ---
 
@@ -827,45 +931,65 @@ Show material explicit and hidden assumptions.
 
 ## 7. Dependency / Sensitivity
 
-Show coupling, concentration, and decision boundaries.
+Show coupling, concentration, the most sensitive dependencies, and the decision boundaries they influence.
 
-## 8. Failure Mode Analysis
+## 8. Uncertainty Structure
+
+Separate material statements into:
+- `KNOWN`
+- `USER-PROVIDED / UNVERIFIED`
+- `INFERRED`
+- `UNKNOWN`
+- `CONTESTED`
+- `STALE`
+
+Do not use the section to repeat the entire evidence audit; use it to expose the uncertainties that constrain the decision state.
+
+## 9. Failure Mode Analysis
 
 Use the complete trigger → cascade chain.
 
-## 9. Scenario Analysis
+## 10. Red-Team Challenge
+
+Show the strongest evidence-based attack on the current reasoning and whether it survives scrutiny.
+
+## 11. Scenario Analysis
 
 Conditional, not pseudo-probabilistic.
 
-## 10. Alternative Analysis
+## 12. Alternative Analysis
 
 Include materially relevant alternatives and option completeness.
 
-## 11. Feasibility / Stakeholder / Agency
+## 13. Feasibility / Stakeholder / Agency
 
 Surface execution, authority, consent, and agency constraints.
 
-## 12. Second-Order Effects
+## 14. Second-Order Effects
 
 Show material downstream effects, responses, and feedback loops.
 
-## 13. Reversibility / Optionality
+## 15. Reversibility / Optionality
 
-Show lock-in and staged pathways.
+Show what can be reversed, what is costly to reverse, and which staged or partial options preserve optionality.
 
-## 14. Decision Boundaries
+## 16. Decision Robustness
+
+Show robustness conditions, fragility conditions, the most sensitive driver when identifiable, and unresolved factors preventing a stronger state.
+
+## 17. Decision Boundaries
 
 State what would change the decision.
 
-## 15. Reassessment Triggers
+## 18. Reassessment Triggers
 
 State what should be monitored.
 
-## 16. Next Best Information / Action
+## 19. Next Best Information / Action
 
 Prioritize the most decision-relevant verification or action.
 
-## 17. Decision Ledger
+## 20. Decision Ledger
 
 Capture where appropriate:
 - timestamp
@@ -883,7 +1007,7 @@ Keep sensitive information to the minimum needed for the user's purpose.
 
 Do not retain or expose sensitive ledger content beyond the user's requested workflow. Where a persistence mechanism exists, use the minimum necessary retention period and avoid copying secrets, credentials, unrelated personal data, or sensitive third-party information into the ledger.
 
-## 18. Final Decision Debug
+## 21. Final Decision Debug
 
 End with:
 
@@ -990,6 +1114,21 @@ When machine-readable output is requested, use a stable machine-readable structu
 ---
 
 # 32. Final Integrity Check
+
+Before returning a `STANDARD`, `DEEP`, or `POST-MORTEM` report, verify that every core module was either executed or explicitly marked `NOT MATERIAL / NOT APPLICABLE` with a reason. Verify in particular:
+
+- dependency / sensitivity mapping is explicit;
+- red-team challenge is explicit;
+- value-of-information priority is explicit;
+- reversibility / optionality is explicit;
+- robustness conditions and fragility conditions are explicit;
+- decision boundaries use conditional reasoning;
+- reassessment triggers are observable and decision-relevant;
+- uncertainty is not silently converted into certainty;
+- the final state follows the deterministic precedence rules; and
+- no recommendation is disguised as an audit finding.
+
+If any required output is missing, add it before finalizing rather than silently omitting it.
 
 Before final output, verify:
 

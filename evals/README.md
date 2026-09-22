@@ -1,10 +1,8 @@
 # Evaluation Pack
 
-The evaluation pack has two intentionally separate layers.
-
 ## 1. Specification evaluation
 
-`python scripts/run_spec_eval.py` checks that the production skill contains the behavioral controls required by the fixed regression cases. The suite is a specification/contract check; it does not execute the language model and therefore cannot establish runtime behavioral accuracy.
+`python scripts/run_spec_eval.py` checks that the standalone production skill contains the behavioral controls required by the fixed regression cases. The suite is a specification / contract check; it does not execute Claude and therefore cannot establish runtime behavioral accuracy.
 
 This is a deterministic repository-level check.
 
@@ -24,4 +22,4 @@ A spec pass is never evidence of a runtime pass.
 
 ## Current regression coverage
 
-The release contains 25 fixed specification cases covering framing, evidence, causal reasoning, hindsight, authority, agency, portfolio linkage, alternatives, high-stakes routing, probability handling, equivalence, conflicts, reversibility, recurring policy, prompt-injection isolation, second-order effects, value-dominant decisions, firsthand evidence, privacy, reference classes, and citation integrity.
+The release contains 25 fixed specification cases plus hardened execution markers for mandatory module coverage, dependency / sensitivity reporting, red-team output, Value of Information, robustness, decision boundaries, and uncertainty structure.
