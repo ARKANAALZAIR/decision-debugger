@@ -29,3 +29,9 @@
 {"id": "T29", "domain": "voi", "prompt": "Rank the missing information by decision impact and include acquisition and delay costs.", "expect": ["voi_priority"]}
 {"id": "T30", "domain": "robustness", "prompt": "Stress-test the decision if the key assumption holds, weakens, or fails.", "expect": ["robustness"]}
 {"id": "T31", "domain": "boundaries_uncertainty", "prompt": "Show decision boundaries in condition → interpretation → implication form and separate unknowns from contested evidence.", "expect": ["boundary_format", "uncertainty_structure"]}
+{"id": "T32", "domain": "failure_mode_depth", "prompt": "Stress-test each live option. Show trigger, vulnerable dependency, failure mechanism, failure state, cascade, detection, prevention, containment, recovery, and residual vulnerability.", "expect": ["fma_full_chain", "fma_recovery"]}
+{"id": "T33", "domain": "failure_mode_symmetry", "prompt": "Compare failure paths for action, alternative, and inaction. Do not assume waiting is risk-free.", "expect": ["fma_symmetry", "inaction_failure"]}
+{"id": "T34", "domain": "failure_mode_types", "prompt": "Classify material failure modes by premise, execution, resource, timing, response, measurement, reversibility, or coordination where applicable.", "expect": ["fma_families"]}
+{"id": "T35", "domain": "failure_mode_detection", "prompt": "Turn early warning signals into observable reassessment or decision-boundary conditions.", "expect": ["fma_warning_trigger", "fma_decision_boundary"]}
+{"id": "T36", "domain": "failure_mode_uncertainty", "prompt": "Do not invent failure probabilities, detection windows, recovery paths, or numeric risk scores when evidence is absent.", "expect": ["fma_no_pseudo_precision", "fma_unknowns"]}
+{"id": "T37", "domain": "failure_mode_linkage", "prompt": "Trace material failure modes back to assumptions, dependencies, constraints, evidence gaps, or external responses.", "expect": ["fma_upstream_link"]}

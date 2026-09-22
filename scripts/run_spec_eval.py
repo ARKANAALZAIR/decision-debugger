@@ -55,6 +55,16 @@ MARKERS = {
     "robustness": ["ROBUSTNESS CONDITIONS", "FRAGILITY CONDITIONS", "MOST SENSITIVE DRIVER"],
     "boundary_format": ["Condition: [observable fact or verified change]", "Interpretation:", "Implication:"],
     "uncertainty_structure": ["Uncertainty Structure", "UNKNOWN", "CONTESTED"],
+    "fma_full_chain": ["Failure-engine architecture", "FAILURE MECHANISM", "TERMINAL CONSEQUENCE", "CONTAINMENT", "RECOVERY / EXIT"],
+    "fma_recovery": ["PREVENT", "CONTAIN", "RECOVER"],
+    "fma_symmetry": ["Failure-mode symmetry test", "How can the alternative fail?"],
+    "inaction_failure": ["How can waiting / doing nothing fail?", "inaction", "delay"],
+    "fma_families": ["PREMISE FAILURE", "EXECUTION FAILURE", "TIMING / SEQUENCING FAILURE", "MEASUREMENT / FEEDBACK FAILURE"],
+    "fma_warning_trigger": ["Early-warning and kill-switch discipline", "WARNING SIGNAL"],
+    "fma_decision_boundary": ["FAILURE SIGNAL", "CONDITION", "INTERPRETATION", "IMPLICATION"],
+    "fma_no_pseudo_precision": ["Do not invent probabilities", "Do not assign a numeric risk score"],
+    "fma_unknowns": ["Use `UNKNOWN` rather than inventing a detection window", "recovery path"],
+    "fma_upstream_link": ["Assumption-to-failure linkage", "ASSUMPTION", "DEPENDENCY", "EVIDENCE GAP"],
 }
 
 def contains_all(text: str, terms):

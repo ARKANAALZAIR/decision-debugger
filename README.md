@@ -17,7 +17,7 @@ Decision Debugger is a Claude Agent Skill that audits decision-making as a conne
 - Reasoning leaps and false precision
 - Dependency and sensitivity vulnerabilities
 - Material second-order effects and feedback loops
-- Failure modes and cascading failures
+- Failure Mode Analysis with trigger → mechanism → cascade → detection → prevention → containment → recovery
 - Missing alternatives, including inaction, delay, pilots, and reversible paths
 - Execution and feasibility problems
 - Stakeholder and decision-rights conflicts
@@ -123,30 +123,34 @@ Validate the revenue timeline against comparable evidence and
 construct a downside runway scenario.
 
 FAILURE MODE ANALYSIS
+Family: RESOURCE / CONSTRAINT FAILURE
 Trigger:
 Revenue validation takes substantially longer than planned.
 ↓
-Weak Point:
-The plan assumes a short validation period.
+Vulnerable Dependency:
+Runway planning depends on the six-month validation assumption.
 ↓
-Failure:
-Revenue remains below the required level.
+Failure Mechanism:
+Revenue stays below the level needed to maintain the original runway.
 ↓
-Immediate Impact:
-Cash runway declines faster than planned.
+Failure State:
+The available financial buffer becomes materially shorter than planned.
 ↓
-Secondary Impact:
-Pressure increases to generate short-term revenue.
+Cascade:
+Cash pressure → short-term optimization → scope changes
+→ execution focus decreases → validation slows further.
 ↓
-Cascading Failure:
-Short-term optimization
-→ product scope expands
-→ execution focus decreases
-→ validation becomes slower
+Detection Signal:
+Burn rate or validation progress diverges from the operating plan.
 ↓
-Early Warning:
-Monthly cash burn or validation metrics deviate materially
-from the planning assumptions.
+Prevention:
+Validate the timeline and model explicit downside runway conditions.
+Containment:
+Use predefined evidence-based conditions to reduce spend or alter scope.
+Recovery / Exit:
+Preserve the option to return to income, reduce burn, or stage the transition.
+Residual Vulnerability:
+The true validation timeline remains uncertain.
 
 ALTERNATIVE ANALYSIS
 Option A — Full-time transition

@@ -1,6 +1,6 @@
 {
   "name": "decision-debugger",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "entrypoint": "SKILL.md",
   "runtime_validation_claim": false,
   "spec_validation_command": "python scripts/run_spec_eval.py",

@@ -37,6 +37,38 @@ provenance: USER-PROVIDED
 verification: UNVERIFIED
 ```
 
+## Failure mode object
+
+Each material failure mode in the human-readable report should map to an object with this shape:
+
+```yaml
+id: "FM-001"
+option_branch: ""
+family: "PREMISE FAILURE"
+trigger_precondition: ""
+vulnerable_dependency: ""
+failure_mechanism: ""
+failure_state: ""
+direct_effect: ""
+cascade: []
+terminal_consequence: ""
+detection_signal: ""
+detection_window: "UNKNOWN"
+prevention: []
+containment: []
+recovery_exit: []
+residual_vulnerability: ""
+decision_changing: "UNKNOWN"
+detectability: "UNKNOWN"
+recoverability: "UNKNOWN"
+optionality_impact: "UNKNOWN"
+evidence_provenance: []
+```
+
+`detection_window`, `decision_changing`, `detectability`, `recoverability`, and `optionality_impact` must not be fabricated. `UNKNOWN` is preferred to pseudo-precision.
+
+The machine-readable failure-mode list must describe the same material failure paths shown in the human-readable report.
+
 ## Canonical object
 
 ```json

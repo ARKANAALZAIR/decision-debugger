@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.5.0 — Failure Mode Engine Hardening
+
+### Added
+- upgraded Failure Mode Analysis from a short cascade list into a structured failure-engine
+- added trigger / precondition → vulnerable dependency → mechanism → failure state → cascade → detection → prevention → containment → recovery / exit → residual vulnerability
+- added failure-mode families covering premise, execution, resource, timing, interaction, measurement, reversibility, and coordination failures
+- added symmetry testing across action, alternative, and inaction / delay when material
+- added explicit early-warning → decision-boundary / reassessment linkage
+- added qualitative detectability, recoverability, and optionality-impact fields without numeric risk scoring
+- added regression cases for FMA depth, symmetry, uncertainty, detection, and upstream linkage
+
+### Fixed / strengthened
+- prevents generic labels such as “execution risk” from qualifying as complete failure analysis
+- separates prevent, contain, and recover / exit actions
+- requires material failure modes to trace upstream to assumptions, dependencies, constraints, evidence gaps, or external responses
+- makes unsupported detection windows, probabilities, recovery paths, and thresholds explicit as UNKNOWN rather than inferred
+
+
 ## 1.4.2 — Runtime Execution Hardening
 
 ### Fixed / strengthened

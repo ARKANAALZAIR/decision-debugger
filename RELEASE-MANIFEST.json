@@ -1,11 +1,11 @@
 {
   "name": "decision-debugger",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "distribution": "universal-standalone-agent-skill",
   "entrypoint": "SKILL.md",
   "claude_code_install": "scripts/install_claude_code.sh",
   "runtime_validation_claim": false,
-  "spec_eval_cases": 31,
+  "spec_eval_cases": 37,
   "spec_eval_result": "PASS",
-  "skill_sha256": "bae5aacaf01685117f36446f19024ca03dee326dad0e7e74812127b85beeeb13"
+  "skill_sha256": "33bc888109169bf9a43c32eb1b9c217a447d56b63dc04845b14ab6732779e36e"
 }
