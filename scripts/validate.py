@@ -14,6 +14,7 @@ REQUIRED = [
     "references/output-schema.md", "references/rapid-mode.md",
     "references/high-stakes-routing.md", "references/privacy-and-ledger.md",
     "references/second-order-effects.md", "references/value-dominant-decisions.md",
+    "references/module-execution-and-integrity.md",
     "templates/quick-debug.md", "templates/deep-debug.md", "templates/postmortem.md",
     "examples/career-decision.md", "examples/business-decision.md", "examples/investment-decision.md",
     "tests/test-cases.md", "evals/cases.jsonl", "evals/README.md", "scripts/run_spec_eval.py",
@@ -31,6 +32,11 @@ TERMS = [
     "Second-Order Effects", "Value-dominant decisions", "NO MATERIAL DIFFERENCE",
     "USER-ESTIMATE", "minimum necessary retention",
     "Mandatory execution gate", "HIGH SENSITIVITY", "Red-team output minimum",
+    "Automatic Execution & Proportionality", "Module Execution Matrix", "Primary Findings",
+    "ERROR FOUND", "ERROR NOT FOUND", "NOT ASSESSABLE", "NOT APPLICABLE", "COMPLETED",
+    "Primary Module", "Related Modules", "Audit Integrity Check", "status ↔ primary-finding ownership",
+    "Human / machine finding parity", "simple everyday decisions", "low-stakes", "reversible",
+    "Do not invent evidence", "BARRIER COVERAGE", "WEAKEST BARRIER", "COMPLETE", "PARTIAL", "UNSUPPORTED",
     "highest-value missing information", "ROBUSTNESS CONDITIONS", "FRAGILITY CONDITIONS",
     "Condition: [observable fact or verified change]", "UNKNOWN"
 ]

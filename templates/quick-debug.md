@@ -1,5 +1,7 @@
 # Quick Decision Debug
 
+> RAPID mode still uses the core contract but reports only material modules and findings.
+
 ## Decision
 
 ## Objective

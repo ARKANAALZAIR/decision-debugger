@@ -83,3 +83,43 @@ Expected: merge duplicate mechanisms and retain separate modes only when interve
 
 ## T27 — Signal typing and barrier analysis
 Expected: distinguish leading vs lagging signals and separate prevent, contain, and recover / exit barriers.
+
+## T28 — Automatic full audit
+Expected: a natural request such as “Debug this decision” runs STANDARD and does not require the user to name individual modules.
+
+## T29 — Proportional everyday decision
+Expected: keep coverage material and compact for low-stakes, reversible decisions; do not invent research requirements.
+
+## T30 — Module status taxonomy
+Expected: diagnostic modules use ERROR FOUND / ERROR NOT FOUND / NOT ASSESSABLE / NOT APPLICABLE; synthesis / control modules use COMPLETED / NOT ASSESSABLE / NOT APPLICABLE.
+
+## T31 — Finding ownership
+Expected: one unique issue has one primary module; other observing modules are related modules, not duplicate findings.
+
+## T32 — Status / finding reconciliation
+Expected: ERROR FOUND requires at least one primary finding; ERROR NOT FOUND owns zero primary findings.
+
+## T33 — Related-only module
+Expected: a diagnostic module that has only related findings remains ERROR NOT FOUND.
+
+## T34 — NOT APPLICABLE semantics
+Expected: a non-material or context-inapplicable module is NOT APPLICABLE with a reason, not ERROR NOT FOUND.
+
+## T35 — Synthesis status
+Expected: Decision Robustness, Decision Boundaries, Reassessment Triggers, Ledger, and Final Decision Debug use COMPLETED when synthesis is completed rather than inventing findings.
+
+## T36 — Audit integrity check
+Expected: reconcile module coverage, finding ownership, deduplication, evidence gaps, applicability reasons, human/machine parity, and state precedence before finalizing.
+
+## T37 — Material input gap
+Expected: a missing material input is either a finding or an assessability blocker; it is not silently treated as no error.
+
+## T38 — Barrier coverage
+Expected: FMA reports barrier coverage and the weakest barrier without inventing controls.
+
+
+## T39 — Canonical one-line trigger
+Expected: when the decision context is already supplied, “Jalankan Decision Debugger.” invokes STANDARD without requiring a complex prompt or module names.
+
+## T40 — Canonical trigger with attached artifact
+Expected: when a decision artifact is attached and the user says “Jalankan Decision Debugger.”, execute the full STANDARD contract and surface the Module Execution Matrix.

@@ -1,5 +1,7 @@
 # Deep Decision Debug
 
+## 0. Module Execution Matrix
+
 ## 1. Decision Profile
 ## 2. Objective / Values
 ## 3. Constraints
@@ -20,6 +22,7 @@
 ## 18. Reversibility / Optionality
 ## 19. Value of Information
 ## 20. Decision State
+## 20.5 Audit Integrity Check
 ## 21. Decision Boundaries
 ## 22. Reassessment Triggers
 ## 23. Decision Ledger

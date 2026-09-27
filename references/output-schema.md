@@ -78,6 +78,8 @@ prevention: []
 containment: []
 recovery_exit: []
 residual_vulnerability: ""
+barrier_coverage: "COMPLETE | PARTIAL | UNSUPPORTED | UNKNOWN"
+weakest_barrier: ""
 decision_changing: "YES | NO | UNKNOWN"
 detectability: "EARLY | MID-COURSE | LATE | UNKNOWN"
 recoverability: "HIGH | MODERATE | LOW | UNKNOWN"
@@ -133,9 +135,51 @@ The machine-readable failure-mode list must describe the same material failure p
   "decision_boundaries": [],
   "reassessment_triggers": [],
   "next_best_information": [],
-  "ledger": {}
+  "ledger": {},
+  "module_execution": [],
+  "audit_integrity": {}
 }
 ```
+
+## Module execution object
+
+```yaml
+module_execution:
+  - module: "Decision Framing"
+    class: "DIAGNOSTIC"
+    status: "ERROR FOUND"
+    primary_finding_ids: ["F-001"]
+    evidence_coverage: "..."
+```
+
+Diagnostic statuses:
+- `ERROR FOUND`
+- `ERROR NOT FOUND`
+- `NOT ASSESSABLE`
+- `NOT APPLICABLE`
+
+Synthesis / control statuses:
+- `COMPLETED`
+- `NOT ASSESSABLE`
+- `NOT APPLICABLE`
+
+A finding has exactly one `primary_module` and may have zero or more `related_modules`. `ERROR FOUND` requires at least one primary finding. `ERROR NOT FOUND` requires zero primary findings. Related findings do not make a detector `ERROR FOUND`.
+
+## Audit integrity object
+
+```yaml
+audit_integrity:
+  core_module_coverage: "PASS"
+  status_finding_ownership: "PASS"
+  primary_related_deduplication: "PASS"
+  not_assessable_gaps: "PASS"
+  not_applicable_reasons: "PASS"
+  human_machine_parity: "PASS"
+  executive_state_precedence: "PASS"
+  overall: "PASS"
+```
+
+Never emit `overall: PASS` when any component is `FAIL`.
 
 Assessment confidence is confidence in the audit assessment, not a probability that the decision succeeds.
 

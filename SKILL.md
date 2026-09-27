@@ -119,6 +119,73 @@ Do not bury these items in prose when they are decision-relevant.
 
 ---
 
+# 1.5 Automatic Execution & Proportionality
+
+When the user provides a decision or decision-relevant artifact and asks to debug or audit it in ordinary language—such as:
+
+- `Jalankan Decision Debugger.` **(canonical trigger)**
+- `Debug this.`
+- `Debug this decision.`
+- `Audit this.`
+- `Stress-test this decision.`
+
+run **STANDARD** automatically unless the user explicitly selects `RAPID`, `DEEP`, or `POST-MORTEM`. The user does not need to name individual modules, explain the framework, or write a complex prompt. The canonical trigger `Jalankan Decision Debugger.` is sufficient when the decision/context is already supplied in the conversation or attached artifact.
+
+For simple everyday decisions, especially low-stakes decisions, keep the same core coverage but compress the report to material issues. Do not invent evidence, probabilities, thresholds, or unnecessary research requirements merely because the decision is simple.
+
+## Module status contract
+
+### Diagnostic modules
+
+Use only:
+- `ERROR FOUND`
+- `ERROR NOT FOUND`
+- `NOT ASSESSABLE`
+- `NOT APPLICABLE`
+
+### Synthesis / control modules
+
+Use only:
+- `COMPLETED`
+- `NOT ASSESSABLE`
+- `NOT APPLICABLE`
+
+A diagnostic module is `ERROR FOUND` only when it owns at least one primary finding. Related findings do not count as primary findings. A diagnostic module with no primary findings is `ERROR NOT FOUND`.
+
+`NOT APPLICABLE` always requires a reason. `NOT ASSESSABLE` requires a named evidence gap and must not be interpreted as `ERROR NOT FOUND`.
+
+### Finding ownership
+
+Each unique material issue gets exactly one finding ID with:
+
+```text
+Primary Module:
+Related Modules:
+```
+
+Do not duplicate one underlying issue across modules. If another module observes the same issue, link it as `Related Module`.
+
+### Module execution matrix
+
+Every STANDARD, DEEP, and POST-MORTEM report must include the 19 core modules in the matrix. Conditional modules appear when applicable.
+
+```text
+Module | Class | Status | Primary Findings | Evidence / Coverage Note
+```
+
+Synthesis / control modules may reference findings but do not create hidden standalone findings that have no diagnostic owner.
+
+### Audit integrity
+
+Before finalizing, reconcile:
+- core module coverage
+- status ↔ primary-finding ownership
+- primary / related deduplication
+- evidence gaps for `NOT ASSESSABLE`
+- explicit reasons for `NOT APPLICABLE`
+- human-readable / machine-readable parity
+- executive state precedence
+
 # 2. Modes
 
 Choose the least expensive mode that still covers material risks.
@@ -490,6 +557,8 @@ DECISION BOUNDARY / REASSESSMENT TRIGGER (if supportable)
 - `CONTAINMENT`: post-trigger damage limitation.
 - `RECOVERY / EXIT`: repair, reverse, stage, abandon, or preserve optionality.
 - `RESIDUAL VULNERABILITY`: what remains exposed after the controls above.
+- `BARRIER COVERAGE`: `COMPLETE`, `PARTIAL`, `UNSUPPORTED`, or `UNKNOWN` based on whether prevention, containment, and recovery / exit are concretely supported.
+- `WEAKEST BARRIER`: the least supported control point when identifiable.
 - `DECISION BOUNDARY / REASSESSMENT TRIGGER`: the observable condition that should alter, pause, stage, reverse, or revisit the branch.
 
 Use `UNKNOWN` rather than inventing a detection window, recovery path, mechanism, threshold, or probability. Do not invent probabilities, and do not assign a numeric risk score.
@@ -715,6 +784,7 @@ Before finalizing, verify:
 □ Feedback loops were checked and only asserted when mechanistically supported.
 □ Detection signal and intervention window are explicit or UNKNOWN.
 □ Prevent / contain / recover are kept distinct.
+□ Barrier coverage and the weakest barrier are explicit or UNKNOWN.
 □ Residual vulnerability is explicit.
 □ Decision-changing failures connect to boundaries / reassessment where supportable.
 □ Duplicate failure modes were merged.
@@ -1137,7 +1207,15 @@ The skill must not claim professional authority it does not have.
 
 # 28. Output Contract
 
-Always report executive-first.
+Always report executive-first. For STANDARD, DEEP, and POST-MORTEM, include the Module Execution Matrix immediately after the executive state.
+
+## 0. Module Execution Matrix
+
+```text
+Module | Class | Status | Primary Findings | Evidence / Coverage Note
+```
+
+All core modules must appear. Diagnostic modules use `ERROR FOUND`, `ERROR NOT FOUND`, `NOT ASSESSABLE`, or `NOT APPLICABLE`. Synthesis / control modules use `COMPLETED`, `NOT ASSESSABLE`, or `NOT APPLICABLE`.
 
 ## 1. Executive Decision State
 
@@ -1285,7 +1363,23 @@ Keep sensitive information to the minimum needed for the user's purpose.
 
 Do not retain or expose sensitive ledger content beyond the user's requested workflow. Where a persistence mechanism exists, use the minimum necessary retention period and avoid copying secrets, credentials, unrelated personal data, or sensitive third-party information into the ledger.
 
-## 21. Final Decision Debug
+## 21. Audit Integrity Check
+
+End the structural audit with:
+
+```text
+Core module coverage: PASS / FAIL
+Status ↔ primary-finding ownership: PASS / FAIL
+Primary / related deduplication: PASS / FAIL
+NOT ASSESSABLE evidence gaps: PASS / FAIL
+NOT APPLICABLE reasons: PASS / FAIL
+Human / machine finding parity: PASS / FAIL
+Executive state precedence: PASS / FAIL
+```
+
+Do not claim an overall PASS when any check fails.
+
+## 22. Final Decision Debug
 
 End with:
 
@@ -1404,7 +1498,13 @@ Before returning a `STANDARD`, `DEEP`, or `POST-MORTEM` report, verify that ever
 - reassessment triggers are observable and decision-relevant;
 - uncertainty is not silently converted into certainty;
 - the final state follows the deterministic precedence rules; and
-- no recommendation is disguised as an audit finding.
+- no recommendation is disguised as an audit finding;
+- every diagnostic `ERROR FOUND` has a primary finding ID;
+- every diagnostic `ERROR NOT FOUND` owns zero primary findings;
+- every `NOT ASSESSABLE` module names its evidence gap;
+- every `NOT APPLICABLE` module names why it does not materially apply;
+- synthesis modules use `COMPLETED` rather than `FOUND` when their job is to assemble or control the audit; and
+- human-readable findings and machine-readable findings are in parity.
 
 If any required output is missing, add it before finalizing rather than silently omitting it.
 

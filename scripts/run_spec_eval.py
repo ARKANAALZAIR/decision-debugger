@@ -75,6 +75,8 @@ MARKERS = {
     "fma_no_numeric": ["Do not convert these labels into numeric scores", "Do not assign numeric risk scores"],
     "fma_signal_type": ["SIGNAL TYPE", "LEADING", "LAGGING"],
     "fma_barriers": ["Barrier analysis", "PREVENTION BARRIER", "CONTAINMENT BARRIER", "RECOVERY / EXIT BARRIER"],
+    "canonical_trigger": ["Jalankan Decision Debugger", "canonical trigger", "STANDARD", "complex prompt"],
+    "module_matrix": ["Module Execution Matrix", "19 core modules"],
 }
 
 def contains_all(text: str, terms):

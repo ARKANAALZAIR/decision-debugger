@@ -1,5 +1,5 @@
-Specification cases: 16
-PASS: 16
+Specification cases: 52
+PASS: 52
 PARTIAL: 0
 Runtime Claude execution: NOT RUN
 [
@@ -80,6 +80,186 @@ Runtime Claude execution: NOT RUN
   },
   {
     "id": "T16",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T17",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T18",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T19",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T20",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T21",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T22",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T23",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T24",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T25",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T26",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T27",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T28",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T29",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T30",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T31",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T32",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T33",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T34",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T35",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T36",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T37",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T38",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T39",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T40",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T41",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T42",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T43",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T44",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T45",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T46",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T47",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T48",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T49",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T50",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T51",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T52",
     "status": "PASS",
     "missing": []
   }

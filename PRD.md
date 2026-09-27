@@ -1,6 +1,6 @@
 # PRD — DECISION DEBUGGER
 
-**Version:** 1.6.0  
+**Version:** 1.9.0  
 **Status:** Production Package  
 **Product Type:** Claude Agent Skill  
 **Tagline:** Debug your decisions before reality does.
@@ -115,11 +115,25 @@ Separate decider, advisor, auditor, delegate, stakeholder, consent, and veto.
 
 ## 3.16 Analysis cost matters
 
-## 3.17 Values, preferences, and objective pluralism
+Information has a cost. Delay can have a cost too.
+
+## 3.17 Automatic execution
+
+A natural prompt such as “Debug this decision” should execute the full STANDARD diagnostic contract without requiring module-by-module prompting.
+
+## 3.18 Module status integrity
+
+Diagnostic modules distinguish found, not found, not assessable, and not applicable. Synthesis / control modules report completed rather than manufacturing findings. Each unique finding has one primary diagnostic owner and optional related modules.
+
+## 3.19 Proportionality for everyday decisions
+
+Low-stakes, reversible decisions receive compact material analysis rather than unnecessary formalism, while the same failure / dependency logic remains available when a material issue exists.
+
+## 3.20 Values, preferences, and objective pluralism
 
 Multiple legitimate objectives may conflict. The system must expose the conflict rather than collapse it into a single hidden utility function. Values remain user-owned or authority-owned.
 
-## 3.18 No material-difference state for alternatives
+## 3.21 No material-difference state for alternatives
 
 When materially relevant options are equivalent under explicit criteria, report `NO MATERIAL DIFFERENCE` in the alternative analysis rather than manufacturing a winner.
 
@@ -245,6 +259,13 @@ LEDGER
 
 ---
 
+- **FR-36** Automatic Standard Execution for natural prompts
+- **FR-37** Diagnostic vs synthesis module status taxonomy
+- **FR-38** Primary / related finding ownership and deduplication
+- **FR-39** Module Execution Matrix and Audit Integrity Check
+- **FR-40** Proportional analysis for simple everyday decisions
+- **FR-41** FMA barrier coverage and weakest-barrier reporting
+
 # 8. State Model
 
 Precedence:
@@ -265,6 +286,7 @@ ROBUST is allowed only when all material gates are satisfied.
 
 Human-readable order:
 
+0. Module Execution Matrix
 1. Executive Decision State
 2. Decision Profile
 3. Decision Map
@@ -282,7 +304,8 @@ Human-readable order:
 14. Reassessment Triggers
 15. Next Best Information / Action
 16. Decision Ledger
-17. Final Decision Debug
+17. Audit Integrity Check
+18. Final Decision Debug
 
 ---
 
@@ -307,6 +330,12 @@ The third layer requires execution against the target Claude runtime. No runtime
 - do not exfiltrate secrets
 
 ---
+
+# 11.5 Module Status / Audit Integrity
+
+The package must reconcile module status with finding ownership. `ERROR FOUND` requires primary findings; `ERROR NOT FOUND` owns none; `NOT ASSESSABLE` names its evidence gap; `NOT APPLICABLE` gives a reason; synthesis / control modules use `COMPLETED`.
+
+Every full audit contains a Module Execution Matrix and an Audit Integrity Check.
 
 # 12. Release Criteria
 

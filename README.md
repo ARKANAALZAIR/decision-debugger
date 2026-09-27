@@ -2,7 +2,7 @@
 
 > **Debug your decisions before reality does.**
 
-Decision Debugger is a Claude Agent Skill that audits decision-making as a connected reasoning system rather than simply telling you what to choose. It traces the chain from objectives, constraints, options, evidence, and assumptions through reasoning, dependencies, failure modes, alternatives, feasibility, reversibility, and the conditions that should trigger reassessment.
+Decision Debugger is a Claude Agent Skill that audits decision-making as a connected reasoning system rather than simply telling you what to choose. The canonical trigger **“Jalankan Decision Debugger.”** automatically runs the full STANDARD audit without requiring a complex prompt or module names. Natural equivalents such as **“Debug this decision.”** behave the same way. It traces the chain from objectives, constraints, options, evidence, and assumptions through reasoning, dependencies, failure modes, alternatives, feasibility, reversibility, and the conditions that should trigger reassessment.
 
 ## What it detects
 
@@ -49,6 +49,14 @@ Example request:
 The skill decomposes the decision into objectives, constraints, options, assumptions, evidence, and dependencies; tests the reasoning; traces failure paths; compares alternatives; checks feasibility and reversibility; and identifies the conditions that should change the decision later.
 
 It does not make the decision for the user.
+
+## Automatic execution
+
+When a decision or decision-relevant artifact is supplied, **“Jalankan Decision Debugger.”** automatically runs STANDARD. Natural equivalents such as **“Debug this.”**, **“Audit this decision.”**, or **“Stress-test this decision.”** also run STANDARD. Simple everyday decisions are handled proportionally: the core contract remains intact, but non-material analysis is kept compact.
+
+## Module status contract
+
+Diagnostic modules use `ERROR FOUND`, `ERROR NOT FOUND`, `NOT ASSESSABLE`, or `NOT APPLICABLE`. Synthesis / control modules use `COMPLETED`, `NOT ASSESSABLE`, or `NOT APPLICABLE`. Every full report includes a Module Execution Matrix and an Audit Integrity Check.
 
 ## Modes
 
@@ -303,6 +311,22 @@ decision-debugger/
 ```
 
 ## Roadmap
+
+### v1.9.0
+
+- Canonical one-line trigger: **“Jalankan Decision Debugger.”**
+- Explicit no-complex-prompt contract when decision context is already supplied
+- Equivalent natural-language triggers preserved
+- Release metadata and regression coverage updated to v1.9.0
+
+### v1.7.0
+
+- Automatic STANDARD execution from natural prompts
+- Diagnostic vs synthesis module status taxonomy
+- Module Execution Matrix + Audit Integrity Check
+- Primary / Related finding ownership and deduplication
+- Proportional handling for simple everyday decisions
+- FMA barrier coverage and weakest-barrier reporting
 
 ### v1.6.0
 

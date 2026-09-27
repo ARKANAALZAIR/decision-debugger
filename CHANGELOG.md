@@ -1,3 +1,36 @@
+## 1.9.0 — Canonical Trigger & UX Contract Hardening
+
+### Added
+- canonical one-line trigger: `Jalankan Decision Debugger.`
+- explicit contract that a supplied decision can be fully audited without a complex prompt or module names
+- canonical trigger support for attached decision artifacts
+- regression cases for the canonical trigger and artifact workflow
+
+### Fixed / strengthened
+- removes ambiguity around whether users must know the internal module names
+- keeps natural-language aliases (`Debug this.`, `Debug this decision.`, `Audit this.`, `Stress-test this decision.`) mapped to STANDARD
+- aligns README, command wrapper, core SKILL, PRD, tests, and release metadata
+
+## 1.7.0 — Decision Audit Contract Hardening
+
+### Added
+- automatic STANDARD execution for natural prompts such as “Debug this decision.”
+- explicit diagnostic vs synthesis / control module classes
+- canonical module status taxonomy: ERROR FOUND, ERROR NOT FOUND, NOT ASSESSABLE, NOT APPLICABLE, COMPLETED
+- Module Execution Matrix for every STANDARD, DEEP, and POST-MORTEM report
+- one-primary-owner finding model with Related Modules to prevent duplicate findings
+- final Audit Integrity Check for module coverage, status / finding reconciliation, applicability, and human / machine parity
+- proportionality rules for simple everyday low-stakes decisions
+- FMA barrier coverage and weakest-barrier reporting
+- ten new specification cases and expanded behavioral regression coverage
+
+### Fixed / strengthened
+- prevents synthesis modules from being labelled FOUND merely because they reference related findings
+- prevents detectors with only related findings from claiming ERROR FOUND
+- makes missing material inputs visible as findings or assessability blockers rather than ERROR NOT FOUND
+- makes NOT APPLICABLE distinct from ERROR NOT FOUND
+- makes FMA controls auditable as prevention → containment → recovery rather than a single mitigation bucket
+
 ## 1.6.0 — Full Failure Mode Analysis Upgrade
 
 ### Added
