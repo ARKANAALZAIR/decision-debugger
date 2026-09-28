@@ -1,7 +1,7 @@
 ---
 name: decision-debugger
 description: Audit, stress-test, compare, or post-mortem consequential decisions across objectives, constraints, evidence, assumptions, failure modes, alternatives, reversibility, and reassessment.
-version: 1.9.2
+version: 1.9.1
 ---
 
 # Decision Debugger

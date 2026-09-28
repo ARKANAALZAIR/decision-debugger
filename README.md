@@ -377,7 +377,3 @@ python scripts/run_spec_eval.py
 
 Static/specification validation checks repository integrity and required behavioral controls; it does not prove that a Claude runtime will make every decision judgment correctly. Do not publish runtime pass rates unless the target runtime was actually executed and the transcripts/results were retained.
 
-
-### v1.9.2
-
-- Module-status, schema, report-order, and validator reconciliation.
