@@ -1,6 +1,6 @@
 # Output Schema
 
-The human-readable report and machine-readable representation must describe the same decision audit.
+The human-readable report and machine-readable representation must describe the same decision audit. Canonical human-readable order is Executive Decision State → Module Execution Matrix → Decision Profile → Decision Map → Material Findings → Evidence Audit → Assumption Registry → Dependency / Sensitivity → Uncertainty Structure → Failure Mode Analysis → Red-Team Challenge → Scenario Analysis → Alternative Analysis → Feasibility / Stakeholder / Agency → Second-Order Effects → Reversibility / Optionality → Decision Robustness → Decision Boundaries → Reassessment Triggers → Next Best Information / Action → Decision Ledger → Audit Integrity Check → Final Decision Debug.
 
 ## Executive state
 
@@ -26,13 +26,16 @@ Allowed state values:
 id: ""
 severity: HIGH
 type: ASSUMPTION
+primary_module: "M01"
+related_modules: []
+decision_changing: YES
+decision_link: ""
 location: ""
 problem: ""
 evidence: ""
 reasoning: ""
 impact: ""
 recommended_action: ""
-decision_changing: YES
 provenance: USER-PROVIDED
 verification: UNVERIFIED
 ```
@@ -174,7 +177,7 @@ audit_integrity:
   primary_related_deduplication: "PASS"
   not_assessable_gaps: "PASS"
   not_applicable_reasons: "PASS"
-  human_machine_parity: "PASS"
+  human_machine_parity: "PASS | FAIL | NOT APPLICABLE"
   executive_state_precedence: "PASS"
   overall: "PASS"
 ```

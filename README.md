@@ -4,6 +4,10 @@
 
 Decision Debugger is a Claude Agent Skill that audits decision-making as a connected reasoning system rather than simply telling you what to choose. The canonical trigger **“Jalankan Decision Debugger.”** automatically runs the full STANDARD audit without requiring a complex prompt or module names. Natural equivalents such as **“Debug this decision.”** behave the same way. It traces the chain from objectives, constraints, options, evidence, and assumptions through reasoning, dependencies, failure modes, alternatives, feasibility, reversibility, and the conditions that should trigger reassessment.
 
+### v1.9.1 — Production hardening release
+
+This release locks the canonical output contract, status semantics, reconciliation gates, and runtime render-conformance checks. Runtime validation in a fresh Claude session remains an external verification step; it is not claimed by the package metadata.
+
 ## What it detects
 
 - Unclear or conflicting objectives
@@ -312,12 +316,12 @@ decision-debugger/
 
 ## Roadmap
 
-### v1.9.0
+### v1.9.1
 
 - Canonical one-line trigger: **“Jalankan Decision Debugger.”**
 - Explicit no-complex-prompt contract when decision context is already supplied
 - Equivalent natural-language triggers preserved
-- Release metadata and regression coverage updated to v1.9.0
+- Release metadata, evaluator snapshot, and packaging validation synchronized for v1.9.1
 
 ### v1.7.0
 
@@ -372,3 +376,8 @@ python scripts/run_spec_eval.py
 ```
 
 Static/specification validation checks repository integrity and required behavioral controls; it does not prove that a Claude runtime will make every decision judgment correctly. Do not publish runtime pass rates unless the target runtime was actually executed and the transcripts/results were retained.
+
+
+### v1.9.2
+
+- Module-status, schema, report-order, and validator reconciliation.

@@ -2,6 +2,8 @@
 
 This is an illustrative output, not a recommendation.
 
+Example Mode: NARRATIVE ILLUSTRATION (not STANDARD / DEEP / POST-MORTEM).
+
 ## Input
 
 > Should we migrate our production database to a new provider this quarter?

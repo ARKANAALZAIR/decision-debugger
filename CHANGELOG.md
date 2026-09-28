@@ -1,4 +1,14 @@
-## 1.9.0 — Canonical Trigger & UX Contract Hardening
+# Changelog
+
+## 1.9.1 — Final production hardening
+
+- Enforced exact 23-section report headings and canonical finding-field order.
+- Separated finding provenance and verification fields.
+- Tightened machine-readable schema with class-dependent status enums and complete finding fields.
+- Prevented integrity checks from claiming human/machine parity when no machine representation is emitted.
+- Added final render-conformance self-check requirements.
+
+## 1.9.0 — Repository baseline
 
 ### Added
 - canonical one-line trigger: `Jalankan Decision Debugger.`
@@ -52,7 +62,6 @@
 - prevents duplicate failure paths from bloating the analysis
 - separates monitoring signals from actual prevention / containment / recovery controls
 
-# Changelog
 
 ## 1.5.0 — Failure Mode Engine Hardening
 

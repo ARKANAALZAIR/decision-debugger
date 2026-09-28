@@ -48,7 +48,7 @@ MARKERS = {
     "citation_integrity": ["citation", "support"],
     "no_material_difference": ["NO MATERIAL DIFFERENCE", "materially equivalent"],
     "second_order_schema": ["second_order_effects", "machine-readable"],
-    "mandatory_gate": ["Mandatory execution gate", "NOT MATERIAL / NOT APPLICABLE"],
+    "mandatory_gate": ["Mandatory execution gate", "NOT APPLICABLE"],
     "sensitivity": ["HIGH SENSITIVITY", "affected decision component"],
     "red_team_output": ["Red-team output minimum", "WHAT WOULD DEFEAT THE ATTACK"],
     "voi_priority": ["HIGH", "verification / acquisition cost", "delay cost"],
@@ -108,8 +108,8 @@ def main():
 
     passed = sum(r["status"] == "PASS" for r in rows)
     print(f"Specification cases: {len(rows)}")
-    print(f"PASS: {passed}")
-    print(f"PARTIAL: {len(rows) - passed}")
+    print(f"STATIC PASS: {passed}")
+    print(f"STATIC PARTIAL: {len(rows) - passed}")
     print("Runtime Claude execution: NOT RUN")
     print(json.dumps(rows, indent=2))
     return 0 if passed == len(rows) else 1

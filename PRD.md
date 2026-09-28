@@ -1,6 +1,6 @@
 # PRD — DECISION DEBUGGER
 
-**Version:** 1.9.0  
+**Version:** 1.9.1  
 **Status:** Production Package  
 **Product Type:** Claude Agent Skill  
 **Tagline:** Debug your decisions before reality does.

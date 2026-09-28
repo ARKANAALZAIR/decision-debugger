@@ -1,6 +1,6 @@
-Specification cases: 52
-PASS: 52
-PARTIAL: 0
+Specification cases: 54
+STATIC PASS: 54
+STATIC PARTIAL: 0
 Runtime Claude execution: NOT RUN
 [
   {
@@ -260,6 +260,16 @@ Runtime Claude execution: NOT RUN
   },
   {
     "id": "T52",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T53",
+    "status": "PASS",
+    "missing": []
+  },
+  {
+    "id": "T54",
     "status": "PASS",
     "missing": []
   }
