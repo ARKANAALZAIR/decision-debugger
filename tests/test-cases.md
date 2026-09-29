@@ -123,3 +123,13 @@ Expected: when the decision context is already supplied, “Jalankan Decision De
 
 ## T40 — Canonical trigger with attached artifact
 Expected: when a decision artifact is attached and the user says “Jalankan Decision Debugger.”, execute the full STANDARD contract and surface the Module Execution Matrix.
+
+
+## 60. Status contract regression
+A diagnostic module may use only ERROR FOUND / ERROR NOT FOUND / NOT ASSESSABLE / NOT APPLICABLE. A synthesis/control module may use only COMPLETED / NOT ASSESSABLE / NOT APPLICABLE. `NOT MATERIAL` is not a status.
+
+## 61. DEEP semantics regression
+DEEP must deepen STANDARD analysis rather than imply that core modules absent from STANDARD are added only in DEEP.
+
+## 62. Reference-loading regression
+The runtime must load all explicitly cited reference contracts before executing the corresponding module logic or integrity checks.

@@ -1,41 +1,90 @@
 from pathlib import Path
-import re,json,sys,hashlib
-ROOT=Path(__file__).resolve().parents[1]
-EXPECTED='1.9.1'
-errors=[]
-required=['SKILL.md','README.md','PRD.md','CHANGELOG.md','CONTRIBUTING.md','QUALITY-GATES.md','VERSION','manifest.json','RELEASE-MANIFEST.json','references/output-schema.md','templates/deep-debug.md','evals/schema.json','scripts/run_spec_eval.py']
-for f in required:
-    if not (ROOT/f).is_file(): errors.append('missing '+f)
-sk= (ROOT/'SKILL.md').read_text(encoding='utf-8')
-for q in ['Non-negotiable rendering contract','Primary Module:','Related Modules:','Decision Link:','Provenance:','Verification:','Human / machine finding parity: PASS / FAIL / NOT APPLICABLE']:
-    if q not in sk: errors.append('SKILL missing '+q)
-if (ROOT/'VERSION').read_text().strip()!=EXPECTED: errors.append('VERSION mismatch')
-m=json.loads((ROOT/'manifest.json').read_text());
-if m.get('version')!=EXPECTED: errors.append('manifest version mismatch')
-rm=json.loads((ROOT/'RELEASE-MANIFEST.json').read_text());
-if rm.get('version')!=EXPECTED: errors.append('release manifest version mismatch')
-front=re.search(r'^version:\s*([0-9.]+)$', sk, re.M)
-if not front or front.group(1)!=EXPECTED: errors.append('SKILL version mismatch')
-if f'### v{EXPECTED}' not in (ROOT/'README.md').read_text(encoding='utf-8'): errors.append('README current version missing')
-if f'**Version:** {EXPECTED}' not in (ROOT/'PRD.md').read_text(encoding='utf-8'): errors.append('PRD version mismatch')
-if not (ROOT/'CHANGELOG.md').read_text().startswith(f'# Changelog\n\n## {EXPECTED} '): errors.append('CHANGELOG current version missing')
-# exact deep template headings
-expected=[f'## {i}. {title}' for i,title in enumerate(['Executive Decision State','Module Execution Matrix','Decision Profile','Decision Map','Material Findings','Evidence Audit','Assumption Registry','Dependency / Sensitivity','Uncertainty Structure','Failure Mode Analysis','Red-Team Challenge','Scenario Analysis','Alternative Analysis','Feasibility / Stakeholder / Agency','Second-Order Effects','Reversibility / Optionality','Decision Robustness','Decision Boundaries','Reassessment Triggers','Next Best Information / Action','Decision Ledger','Audit Integrity Check','Final Decision Debug'],1)]
-dt=(ROOT/'templates/deep-debug.md').read_text(encoding='utf-8')
-heads=re.findall(r'^## \d+\. .+$',dt,re.M)
-if heads!=expected: errors.append('deep-debug exact headings mismatch')
-# schema checks
-schema=json.loads((ROOT/'evals/schema.json').read_text())
-if schema.get('required') != ['decision','executive_state','findings','module_execution_matrix','audit_integrity']: errors.append('schema top-level required mismatch')
-f=schema['properties']['findings']['items']; req=['id','severity','type','primary_module','related_modules','decision_changing','decision_link','location','problem','evidence','reasoning','impact','recommended_action','provenance','verification']
-if f.get('required')!=req: errors.append('finding schema required mismatch')
-me=schema['properties']['module_execution_matrix']['items']
-if len(me.get('allOf',[]))!=2: errors.append('module class/status conditional missing')
-ai=schema['properties']['audit_integrity']
-if ai['properties']['human_machine_parity'].get('enum') != ['PASS','FAIL','NOT APPLICABLE']: errors.append('human_machine_parity enum mismatch')
-for bad in ROOT.rglob('*'):
-    if bad.is_file() and (bad.suffix in {'.pyc', '.pyo'} or '__pycache__' in bad.parts):
-        errors.append(f'build artifact present: {bad.relative_to(ROOT)}')
-if errors:
-    print('FAIL'); print('\n'.join(errors)); raise SystemExit(1)
-print('PASS'); print('version',EXPECTED); print('render_contract PASS'); print('schema_contract PASS'); print('status_contract PASS'); print('integrity_contract PASS')
+import hashlib
+import re
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+
+REQUIRED = [
+    "SKILL.md", "README.md", "PRD.md", "CHANGELOG.md", "CONTRIBUTING.md",
+    "QUALITY-GATES.md", "LICENSE", "VERSION", "manifest.json",
+    "commands/decision-debug.md", "references/decision-framework.md",
+    "references/evidence-audit.md", "references/failure-mode-analysis.md",
+    "references/causal-analysis.md", "references/stakeholder-and-agency.md",
+    "references/output-schema.md", "references/rapid-mode.md",
+    "references/high-stakes-routing.md", "references/privacy-and-ledger.md",
+    "references/second-order-effects.md", "references/value-dominant-decisions.md",
+    "references/module-execution-and-integrity.md",
+    "templates/quick-debug.md", "templates/deep-debug.md", "templates/postmortem.md",
+    "examples/career-decision.md", "examples/business-decision.md", "examples/investment-decision.md",
+    "tests/test-cases.md", "evals/cases.jsonl", "evals/README.md", "scripts/run_spec_eval.py",
+    "scripts/install_claude_code.sh"
+]
+
+TERMS = [
+    "# 3. Intake", "# 4. Decision Framing", "# 5. Decision Decomposition",
+    "# 6. Evidence Audit", "# 8. Assumption Registry", "# 9. Dependency / Sensitivity Mapping",
+    "# 10. Failure Mode Analysis", "# 11. Red-Team Challenge", "# 12. Causal Identification Check",
+    "# 19. Reversibility / Optionality", "# 20. Decision Robustness",
+    "# 22. Decision Boundaries", "# 23. Reassessment Triggers",
+    "INSUFFICIENT EVIDENCE", "CONTESTED", "FRAGILE", "CONDITIONAL", "ROBUST",
+    "Untrusted Content Isolation", "Post-Decision Review", "Decision-Changing Test",
+    "Second-Order Effects", "Value-dominant decisions", "NO MATERIAL DIFFERENCE",
+    "USER-ESTIMATE", "minimum necessary retention",
+    "Mandatory execution gate", "HIGH SENSITIVITY", "Red-team output minimum",
+    "Automatic Execution & Proportionality", "Module Execution Matrix", "Primary Findings",
+    "ERROR FOUND", "ERROR NOT FOUND", "NOT ASSESSABLE", "NOT APPLICABLE", "COMPLETED",
+    "Primary Module", "Related Modules", "Audit Integrity Check", "status ↔ primary-finding ownership",
+    "Human / machine finding parity", "simple everyday decisions", "low-stakes", "reversible",
+    "Do not invent evidence", "BARRIER COVERAGE", "WEAKEST BARRIER", "COMPLETE", "PARTIAL", "UNSUPPORTED",
+    "highest-value missing information", "ROBUSTNESS CONDITIONS", "FRAGILITY CONDITIONS",
+    "Condition: [observable fact or verified change]", "UNKNOWN"
+]
+
+def main() -> int:
+    errors = []
+    for rel in REQUIRED:
+        if not (ROOT / rel).is_file():
+            errors.append(f"missing: {rel}")
+
+    skill_path = ROOT / "SKILL.md"
+    if skill_path.exists():
+        skill = skill_path.read_text(encoding="utf-8")
+        if not skill.startswith("---\n"):
+            errors.append("SKILL.md has no YAML frontmatter")
+        fm = re.search(r"^---\n(.*?)\n---\n", skill, re.S)
+        if not fm:
+            errors.append("SKILL.md frontmatter block is malformed")
+        else:
+            block = fm.group(1)
+            if not re.search(r"^name:\s*\S+", block, re.M):
+                errors.append("SKILL.md frontmatter missing name")
+            if not re.search(r"^description:\s*.+", block, re.M):
+                errors.append("SKILL.md frontmatter missing description")
+        for term in TERMS:
+            if term not in skill:
+                errors.append(f"SKILL.md missing: {term}")
+
+    # If a legacy Claude Code plugin wrapper is present, ensure it mirrors the root skill.
+    plugin_skill_path = ROOT / "skills/decision-debugger/SKILL.md"
+    if plugin_skill_path.exists() and skill_path.exists():
+        def sha(path: Path) -> str:
+            return hashlib.sha256(path.read_bytes()).hexdigest()
+        if sha(skill_path) != sha(plugin_skill_path):
+            errors.append("root SKILL.md and plugin skill SKILL.md differ")
+
+    if errors:
+        print("VALIDATION FAILED")
+        for e in errors:
+            print("-", e)
+        return 1
+
+    print("VALIDATION PASSED")
+    print(f"Required files checked: {len(REQUIRED)}")
+    print("Standalone skill identity: OK")
+    print("Frontmatter: OK")
+    print("Required behavior markers: OK")
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())

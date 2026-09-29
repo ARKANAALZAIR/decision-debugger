@@ -2,8 +2,6 @@
 
 This is an illustrative output, not a recommendation.
 
-Example Mode: NARRATIVE ILLUSTRATION (not STANDARD / DEEP / POST-MORTEM).
-
 ## Input
 
 > Should I leave my job to build a startup full-time? I have about 12 months of runway and expect revenue validation within six months.

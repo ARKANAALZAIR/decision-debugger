@@ -28,4 +28,4 @@ The release contains 54 fixed specification cases plus hardened execution marker
 The FMA suite additionally checks common-mode drivers, material failure interactions, supportable feedback loops, qualitative criticality, leading/lagging detection signals, barrier analysis, and deduplication.
 
 
-The 1.9.0 hardening suite additionally checks automatic execution, proportionality for everyday decisions, module status semantics, primary/related finding ownership, status/finding reconciliation, NOT APPLICABLE semantics, synthesis completion status, audit-integrity reconciliation, material-input gaps, and FMA barrier coverage.
+The 1.9.1 hardening suite additionally checks automatic execution, proportionality for everyday decisions, module status semantics, primary/related finding ownership, status/finding reconciliation, NOT APPLICABLE semantics, synthesis completion status, audit-integrity reconciliation, material-input gaps, and FMA barrier coverage.

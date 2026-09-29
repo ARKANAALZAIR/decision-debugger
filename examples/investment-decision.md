@@ -2,8 +2,6 @@
 
 This is an illustrative reasoning audit, not investment advice or a recommendation to buy or sell.
 
-Example Mode: NARRATIVE ILLUSTRATION (not STANDARD / DEEP / POST-MORTEM).
-
 ## Input
 
 > I want to increase my position because the asset is down 30% and my long-term thesis is unchanged.

@@ -1,14 +1,9 @@
 ---
 name: decision-debugger
 description: Audit, stress-test, compare, or post-mortem consequential decisions across objectives, constraints, evidence, assumptions, failure modes, alternatives, reversibility, and reassessment.
-version: 1.9.1
 ---
 
 # Decision Debugger
-
-## Domain Gate
-
-If the input is clearly not a decision, decision-support problem, or decision post-mortem, return `Audit Mode: DOMAIN GATE`, state the reason, and do not manufacture core-module findings.
 
 ## Mission
 
@@ -78,10 +73,14 @@ Never:
 
 Be diagnostic, traceable, conditional, and proportional to the stakes.
 
+### Reference-loading contract
+
+Before executing a STANDARD, DEEP, or POST-MORTEM audit, load every bundled reference explicitly cited by the selected workflow, including the relevant output, execution-integrity, routing, FMA, causal, evidence, second-order, stakeholder, and value-of-information references. Do not approximate a rule from memory when the cited contract is available. If a required reference cannot be loaded, state the limitation rather than silently substituting a weaker rule.
+
 ### Mandatory execution gate
 
 For `STANDARD`, `DEEP`, and `POST-MORTEM` modes, do not silently omit a core module.
-For each core module below, either execute it or explicitly mark it `NOT APPLICABLE` and give a one-line reason. Use `NOT ASSESSABLE` when a required core input is missing; do not introduce a third module status beyond the declared status contract:
+For each core module below, either execute it or use the role-appropriate status (`ERROR FOUND`, `ERROR NOT FOUND`, `NOT ASSESSABLE`, or `NOT APPLICABLE` for diagnostics; `COMPLETED`, `NOT ASSESSABLE`, or `NOT APPLICABLE` for synthesis/control) with a one-line reason.
 
 ```text
 Decision Framing
@@ -105,7 +104,7 @@ Decision Boundaries
 Reassessment Triggers
 ```
 
-If a module is skipped because the necessary evidence is unavailable, report the evidence gap rather than replacing the module with generic commentary.
+If a module cannot be materially assessed because necessary evidence is unavailable, mark it `NOT ASSESSABLE` and report the evidence gap rather than replacing the module with generic commentary.
 
 ### Required output discipline
 
@@ -188,12 +187,8 @@ Before finalizing, reconcile:
 - primary / related deduplication
 - evidence gaps for `NOT ASSESSABLE`
 - explicit reasons for `NOT APPLICABLE`
-- human-readable / machine-readable parity, including module execution matrix and audit-integrity state
+- human-readable / machine-readable parity
 - executive state precedence
-
-# Cross-Debugger Vocabulary Mapping
-
-For cross-debugger aggregation, map `ERROR FOUND` ≡ `FOUND`, `ERROR NOT FOUND` ≡ `Error Not Found`, `NOT ASSESSABLE` ≡ `NOT ASSESSABLE`, `NOT APPLICABLE` ≡ `NOT APPLICABLE`, and `COMPLETED` ≡ `COMPLETED`. Domain-gate outputs are not module statuses.
 
 # 2. Modes
 
@@ -220,7 +215,7 @@ Default mode. Run the full decision chain at normal depth.
 
 Use for high-stakes, irreversible, evidence-conflicted, multi-party, dependency-heavy, or explicitly comprehensive decisions.
 
-Add:
+DEEP does **not** add a separate set of core modules; STANDARD already executes the core decision chain. DEEP increases the depth and stress level of the same modules. In DEEP mode, strengthen as applicable:
 - evidence dependence analysis
 - causal identification check
 - dependency / sensitivity mapping
@@ -230,7 +225,6 @@ Add:
 - value of information
 - stakeholder / authority / agency audit
 - portfolio / batch analysis where relevant
-- second-order effect analysis
 - value-dominant decision check
 
 ## POST-MORTEM
@@ -698,7 +692,7 @@ STAKEHOLDER / EXTERNAL RESPONSE
 
 If no upstream cause can be supported, label the mechanism `INFERRED` or `UNKNOWN` rather than presenting it as established.
 
-Conversely, every high-sensitivity assumption must be checked for a concrete failure path unless explicitly marked `NOT APPLICABLE`.
+Conversely, every high-sensitivity assumption must be checked for a concrete failure path unless explicitly marked `NOT MATERIAL`.
 
 ## 10.9 Early-warning and kill-switch discipline
 
@@ -1216,44 +1210,18 @@ The skill must not claim professional authority it does not have.
 
 # 28. Output Contract
 
-### Non-negotiable rendering contract
+Always report executive-first. For STANDARD, DEEP, and POST-MORTEM, include the Module Execution Matrix immediately after the executive state.
 
-For STANDARD, DEEP, and POST-MORTEM reports, render the canonical report with the **exact section numbers and titles** below. Do not rename, merge, omit, reorder, or invent numbered sections. Do not substitute shorthand such as “Value of Information” for “Next Best Information / Action”.
+## 0. Module Execution Matrix
 
-1. `## 1. Executive Decision State`
-2. `## 2. Module Execution Matrix`
-3. `## 3. Decision Profile`
-4. `## 4. Decision Map`
-5. `## 5. Material Findings`
-6. `## 6. Evidence Audit`
-7. `## 7. Assumption Registry`
-8. `## 8. Dependency / Sensitivity`
-9. `## 9. Uncertainty Structure`
-10. `## 10. Failure Mode Analysis`
-11. `## 11. Red-Team Challenge`
-12. `## 12. Scenario Analysis`
-13. `## 13. Alternative Analysis`
-14. `## 14. Feasibility / Stakeholder / Agency`
-15. `## 15. Second-Order Effects`
-16. `## 16. Reversibility / Optionality`
-17. `## 17. Decision Robustness`
-18. `## 18. Decision Boundaries`
-19. `## 19. Reassessment Triggers`
-20. `## 20. Next Best Information / Action`
-21. `## 21. Decision Ledger`
-22. `## 22. Audit Integrity Check`
-23. `## 23. Final Decision Debug`
+```text
+Module | Class | Status | Primary Findings | Evidence / Coverage Note
+```
 
-Every material finding must use the full canonical finding block even when low severity. Never collapse fields into a prose sentence. Required order is `ID → Severity → Type → Primary Module → Related Modules → Decision-Changing → Decision Link → Location → Problem → Evidence → Reasoning → Impact → Recommended Action → Provenance → Verification`.
-
-If no machine-readable representation is emitted in the same response, `Human / machine finding parity` is `NOT APPLICABLE`; do not claim `PASS`. If a machine-readable representation is emitted, parity must be checked against the human findings before claiming `PASS`.
-
-Before returning the report, silently run a render-conformance check: exact 23 headings, all core modules once, canonical finding fields present, legal status for each module class, and integrity values internally reconciled. If a contract condition cannot be verified, report `NOT VERIFIED` or `FAIL` rather than inventing `PASS`.
-
-
-Always report executive-first. The **Canonical report order** is: Executive Decision State → Module Execution Matrix → Decision Profile → Decision Map → Material Findings → Evidence Audit → Assumption Registry → Dependency / Sensitivity → Uncertainty Structure → Failure Mode Analysis → Red-Team Challenge → Scenario Analysis → Alternative Analysis → Feasibility / Stakeholder / Agency → Second-Order Effects → Reversibility / Optionality → Decision Robustness → Decision Boundaries → Reassessment Triggers → Next Best Information / Action → Decision Ledger → Audit Integrity Check → Final Decision Debug. For STANDARD, DEEP, and POST-MORTEM, include the Module Execution Matrix immediately after the executive state.
+All core modules must appear. Diagnostic modules use `ERROR FOUND`, `ERROR NOT FOUND`, `NOT ASSESSABLE`, or `NOT APPLICABLE`. Synthesis / control modules use `COMPLETED`, `NOT ASSESSABLE`, or `NOT APPLICABLE`.
 
 ## 1. Executive Decision State
+
 ```text
 Decision State:
 Assessment Confidence:
@@ -1268,14 +1236,8 @@ Allowed:
 - MODERATE
 - LOW
 
-## 2. Module Execution Matrix
-```text
-Module | Class | Status | Primary Findings | Evidence / Coverage Note
-```
+## 2. Decision Profile
 
-All core modules must appear. Diagnostic modules use `ERROR FOUND`, `ERROR NOT FOUND`, `NOT ASSESSABLE`, or `NOT APPLICABLE`. Synthesis / control modules use `COMPLETED`, `NOT ASSESSABLE`, or `NOT APPLICABLE`.
-
-## 3. Decision Profile
 ```text
 Decision:
 Objective(s):
@@ -1290,31 +1252,27 @@ Stakes:
 Mode:
 ```
 
-## 4. Decision Map
+## 3. Decision Map
+
 Show the material reasoning chain.
 
-## 5. Material Findings
-Every finding uses this exact field sequence:
+## 4. Material Findings
+
+Every finding uses:
 
 ```text
 ID:
 Severity:
 Type:
-Primary Module:
-Related Modules:
-Decision-Changing:
-Decision Link:
 Location:
 Problem:
 Evidence:
 Reasoning:
 Impact:
 Recommended Action:
-Provenance:
-Verification:
+Decision-Changing:
+Provenance / Verification:
 ```
-
-Do not combine `Provenance` and `Verification`, and do not omit a field because it is unknown; use `UNKNOWN`, `NONE`, or the contractually appropriate null marker.
 
 Severity:
 - CRITICAL
@@ -1322,16 +1280,20 @@ Severity:
 - MEDIUM
 - LOW
 
-## 6. Evidence Audit
+## 5. Evidence Audit
+
 Show lineage, freshness, relevance, verification, conflicts, and dependence.
 
-## 7. Assumption Registry
+## 6. Assumption Registry
+
 Show material explicit and hidden assumptions.
 
-## 8. Dependency / Sensitivity
+## 7. Dependency / Sensitivity
+
 Show coupling, concentration, the most sensitive dependencies, and the decision boundaries they influence.
 
-## 9. Uncertainty Structure
+## 8. Uncertainty Structure
+
 Separate material statements into:
 - `KNOWN`
 - `USER-PROVIDED / UNVERIFIED`
@@ -1342,40 +1304,52 @@ Separate material statements into:
 
 Do not use the section to repeat the entire evidence audit; use it to expose the uncertainties that constrain the decision state.
 
-## 10. Failure Mode Analysis
+## 9. Failure Mode Analysis
+
 Use the complete trigger → cascade chain.
 
-## 11. Red-Team Challenge
+## 10. Red-Team Challenge
+
 Show the strongest evidence-based attack on the current reasoning and whether it survives scrutiny.
 
-## 12. Scenario Analysis
+## 11. Scenario Analysis
+
 Conditional, not pseudo-probabilistic.
 
-## 13. Alternative Analysis
+## 12. Alternative Analysis
+
 Include materially relevant alternatives and option completeness.
 
-## 14. Feasibility / Stakeholder / Agency
+## 13. Feasibility / Stakeholder / Agency
+
 Surface execution, authority, consent, and agency constraints.
 
-## 15. Second-Order Effects
+## 14. Second-Order Effects
+
 Show material downstream effects, responses, and feedback loops.
 
-## 16. Reversibility / Optionality
+## 15. Reversibility / Optionality
+
 Show what can be reversed, what is costly to reverse, and which staged or partial options preserve optionality.
 
-## 17. Decision Robustness
+## 16. Decision Robustness
+
 Show robustness conditions, fragility conditions, the most sensitive driver when identifiable, and unresolved factors preventing a stronger state.
 
-## 18. Decision Boundaries
+## 17. Decision Boundaries
+
 State what would change the decision.
 
-## 19. Reassessment Triggers
+## 18. Reassessment Triggers
+
 State what should be monitored.
 
-## 20. Next Best Information / Action
+## 19. Next Best Information / Action
+
 Prioritize the most decision-relevant verification or action.
 
-## 21. Decision Ledger
+## 20. Decision Ledger
+
 Capture where appropriate:
 - timestamp
 - decision state
@@ -1392,7 +1366,8 @@ Keep sensitive information to the minimum needed for the user's purpose.
 
 Do not retain or expose sensitive ledger content beyond the user's requested workflow. Where a persistence mechanism exists, use the minimum necessary retention period and avoid copying secrets, credentials, unrelated personal data, or sensitive third-party information into the ledger.
 
-## 22. Audit Integrity Check
+## 21. Audit Integrity Check
+
 End the structural audit with:
 
 ```text
@@ -1401,13 +1376,14 @@ Status ↔ primary-finding ownership: PASS / FAIL
 Primary / related deduplication: PASS / FAIL
 NOT ASSESSABLE evidence gaps: PASS / FAIL
 NOT APPLICABLE reasons: PASS / FAIL
-Human / machine finding parity: PASS / FAIL / NOT APPLICABLE
+Human / machine finding parity: PASS / FAIL
 Executive state precedence: PASS / FAIL
 ```
 
 Do not claim an overall PASS when any check fails.
 
-## 23. Final Decision Debug
+## 22. Final Decision Debug
+
 End with:
 
 ```text
@@ -1493,16 +1469,6 @@ When machine-readable output is requested, use a stable machine-readable structu
     "decision_changing_finding": null
   },
   "findings": [],
-  "module_execution_matrix": [],
-  "audit_integrity": {
-    "core_module_coverage": "PASS",
-    "status_finding_ownership": "PASS",
-    "deduplication": "PASS",
-    "not_assessable_evidence_gaps": "PASS",
-    "not_applicable_reasons": "PASS",
-    "human_machine_parity": "PASS",
-    "executive_state_precedence": "PASS"
-  },
   "evidence_audit": [],
   "assumptions": [],
   "dependencies": [],
@@ -1524,7 +1490,7 @@ When machine-readable output is requested, use a stable machine-readable structu
 
 # 32. Final Integrity Check
 
-Before returning a `STANDARD`, `DEEP`, or `POST-MORTEM` report, also verify that the 23 canonical headings and the exact finding field order are present; never silently renumber sections or use alternate section titles. Before returning a `STANDARD`, `DEEP`, or `POST-MORTEM` report, verify that every core module was either executed or explicitly marked `NOT APPLICABLE` with a reason. Verify in particular:
+Before returning a `STANDARD`, `DEEP`, or `POST-MORTEM` report, verify that every core module was either executed or explicitly assigned a valid role-appropriate status with a reason. Verify in particular:
 
 - dependency / sensitivity mapping is explicit;
 - red-team challenge is explicit;

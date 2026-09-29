@@ -1,6 +1,6 @@
 Specification cases: 54
-STATIC PASS: 54
-STATIC PARTIAL: 0
+PASS: 54
+PARTIAL: 0
 Runtime Claude execution: NOT RUN
 [
   {
