@@ -1,3 +1,18 @@
+## 1.10.0 — Decision Outcome Calibration Loop
+
+### Added
+- copyable, stable-ID decision-time records for expectations, assumptions, evidence, horizons, indicators, and reassessment thresholds
+- append-only outcome reviews that compare forecasts with observations while preserving the original information set
+- explicit separation of decision-process quality from outcome quality
+- cross-decision pattern review and conditional quantitative metrics for supplied completed records
+- regression cases for forecast review, outcome bias in both directions, insufficient or missing data, invalidated assumptions, and hindsight leakage
+
+### Fixed / strengthened
+- marks unsupported forecast or outcome comparisons `NOT ASSESSABLE` instead of reconstructing missing information
+- labels user-supplied assumptions and probability estimates and avoids forcing numerical forecasts
+- clarifies that the ledger is user-maintained and does not imply unsupplied memory, reminders, or monitoring
+- makes the specification evaluator fail on unmapped expectation markers and maps the existing module-status, finding-ownership, integrity, barrier, and proportionality checks
+
 ## 1.9.1 — Status Contract & Reference Loading Hardening
 
 ### Fixed

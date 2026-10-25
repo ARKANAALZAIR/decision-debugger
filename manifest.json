@@ -1,9 +1,10 @@
 {
   "name": "decision-debugger",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "entrypoint": "SKILL.md",
   "runtime_validation_claim": false,
-  "spec_validation_command": "python scripts/run_spec_eval.py",
+  "spec_validation_command": "python3 -B scripts/run_spec_eval.py --offline-only",
+  "runtime_capture_evaluation_command": "python3 -B scripts/run_spec_eval.py --captures DIR",
   "distribution": "universal-standalone-agent-skill",
   "claude_code_install": "scripts/install_claude_code.sh"
 }

@@ -1,6 +1,6 @@
 # PRD — DECISION DEBUGGER
 
-**Version:** 1.9.1  
+**Version:** 1.10.0  
 **Status:** Production Package  
 **Product Type:** Claude Agent Skill  
 **Tagline:** Debug your decisions before reality does.
@@ -48,6 +48,7 @@ Build a reusable decision-auditing skill that can:
 8. identify decision boundaries
 9. define reassessment triggers
 10. preserve user agency
+11. compare recorded expectations with later outcomes and learn across user-supplied decision records
 
 ---
 
@@ -138,6 +139,10 @@ Multiple legitimate objectives may conflict. The system must expose the conflict
 When materially relevant options are equivalent under explicit criteria, report `NO MATERIAL DIFFERENCE` in the alternative analysis rather than manufacturing a winner.
 
 Information has a cost. Delay can have a cost too.
+
+## 3.22 User-controlled outcome calibration
+
+Capture a locked decision-time record and append a separate outcome review. Compare forecasts with observed outcomes without hindsight contamination, distinguish process quality from outcome quality, and identify cross-decision patterns only from records the user supplies. Do not imply automatic persistence or monitoring.
 
 ---
 
@@ -265,6 +270,13 @@ LEDGER
 - **FR-39** Module Execution Matrix and Audit Integrity Check
 - **FR-40** Proportional analysis for simple everyday decisions
 - **FR-41** FMA barrier coverage and weakest-barrier reporting
+- **FR-42** Decision Outcome Calibration Loop
+  - create a copyable, stable-ID decision-time record with objectives, user-supplied assumptions, contemporaneous evidence, expected outcomes, measurable forecasts or ranges where supportable, horizon, leading indicators, reassessment thresholds, and unresolved uncertainties
+  - lock the original information set and keep later outcome information in a separate, append-only review
+  - compare forecasts with observed results; assess assumptions and reassessment triggers; distinguish decision-process quality from outcome quality
+  - mark comparisons `NOT ASSESSABLE` when original records, forecasts, or outcomes are missing; never reconstruct them as facts
+  - identify evidence-linked recurring patterns across supplied completed records; report quantitative metrics only when forecasts, outcomes, and eligible sample suit the metric, with limitations and no universal minimum sample or confidence claim
+  - preserve user control and privacy; do not claim memory, reminders, monitoring, or access to unsupplied prior records
 
 # 8. State Model
 
@@ -303,7 +315,7 @@ Human-readable order:
 13. Decision Boundaries
 14. Reassessment Triggers
 15. Next Best Information / Action
-16. Decision Ledger
+16. Decision Ledger, including the optional locked decision-time record and separate outcome review for calibration
 17. Audit Integrity Check
 18. Final Decision Debug
 

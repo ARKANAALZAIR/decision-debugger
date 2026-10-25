@@ -27,6 +27,8 @@ Decision Debugger is a Claude Agent Skill that audits decision-making as a conne
 - User-supplied probability estimates treated as verified probabilities
 - Missing decision boundaries
 - Missing reassessment triggers
+- Forecasts that cannot later be compared with observed outcomes
+- Recurring reasoning or forecasting patterns across supplied completed records
 - Value or preference criteria silently treated as objective facts
 - Hindsight contamination
 
@@ -49,6 +51,12 @@ Example request:
 The skill decomposes the decision into objectives, constraints, options, assumptions, evidence, and dependencies; tests the reasoning; traces failure paths; compares alternatives; checks feasibility and reversibility; and identifies the conditions that should change the decision later.
 
 It does not make the decision for the user.
+
+## Decision Outcome Calibration Loop
+
+For consequential decisions with meaningful uncertainty or observable results, Decision Debugger can create a copyable, stable-ID record of the decision-time assumptions, evidence, expectations, indicators, and reassessment thresholds. When the user later supplies that record and outcome evidence, it compares forecasts with observations while keeping later information out of the original record. It can review patterns across multiple completed records the user provides, and reports quantitative metrics only when the forecasts and outcomes support them.
+
+The ledger is manually maintained. Save the record and supply it again for review; the package does not imply persistent memory, automatic reminders, background monitoring, or access to earlier decisions that were not provided.
 
 ## Automatic execution
 
@@ -221,6 +229,9 @@ Make the decision context available, then ask naturally:
 - `Compare my alternatives, including doing nothing.`
 - `What would change this decision later?`
 - `Run a post-mortem using only information available at the time.`
+- `Create a decision-time calibration record for this decision.`
+- `Review this saved decision record against the outcome.`
+- `Look for recurring patterns across these completed decision records.`
 
 For deeper analysis, provide:
 
@@ -279,6 +290,8 @@ For past decisions, it uses **Information-Set Lock**: evaluate the original reas
 
 The skill also keeps values and preferences distinct from empirical claims. A value-based trade-off is not silently converted into an objective fact.
 
+When the original record or outcome is missing, the affected comparison is `NOT ASSESSABLE`; the system does not invent a forecast or result. User-supplied probabilities remain labeled as estimates, and qualitative expectations are not converted into numbers.
+
 ## Limitations
 
 - It cannot guarantee that a decision will succeed.
@@ -312,12 +325,20 @@ decision-debugger/
 
 ## Roadmap
 
+### v1.10.0
+
+- Decision Outcome Calibration Loop with copyable pre-decision records and separate append-only outcome reviews
+- Outcome comparisons that preserve the original information set and separate process quality from outcome quality
+- Cross-decision patterns and calibration metrics limited to comparable, supplied evidence
+- Ten captured-output scenarios and an evaluator that validates the canonical schema and scenario invariants
+- Actual target-runtime verification remains required before runtime release
+
 ### v1.9.1
 
 - Canonical one-line trigger: **“Jalankan Decision Debugger.”**
 - Explicit no-complex-prompt contract when decision context is already supplied
 - Equivalent natural-language triggers preserved
-- Release metadata and regression coverage updated to v1.9.0
+- Release metadata and regression coverage aligned to v1.9.1
 
 ### v1.7.0
 
@@ -367,8 +388,8 @@ Released under the MIT License. See `LICENSE`.
 Run:
 
 ```bash
-python scripts/validate.py
-python scripts/run_spec_eval.py
+python3 -B scripts/validate.py
+python3 -B scripts/run_spec_eval.py --offline-only
 ```
 
-Static/specification validation checks repository integrity and required behavioral controls; it does not prove that a Claude runtime will make every decision judgment correctly. Do not publish runtime pass rates unless the target runtime was actually executed and the transcripts/results were retained.
+Static/specification validation checks repository integrity and required behavioral controls; it does not prove that a Claude runtime will make every decision judgment correctly. For runtime evaluation, execute the ten prompts against the target runtime and run `python3 -B scripts/run_spec_eval.py --captures PATH`. Missing captures keep the runtime gate blocked. Do not publish runtime pass rates unless the target runtime was actually executed and the transcripts/results were retained.

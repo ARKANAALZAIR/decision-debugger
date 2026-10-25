@@ -133,3 +133,27 @@ DEEP must deepen STANDARD analysis rather than imply that core modules absent fr
 
 ## 62. Reference-loading regression
 The runtime must load all explicitly cited reference contracts before executing the corresponding module logic or integrity checks.
+
+## T63 — Pre-decision record and later forecast review
+Expected: create a copyable record with a stable ID, date, question, objective, user-supplied assumptions and contemporaneous evidence, expected outcomes, supported ranges or measurable predictions, horizon, leading indicators, reassessment thresholds, and unresolved uncertainties. Label user probabilities `USER-ESTIMATE`; do not force numerical probabilities. Later, compare each recorded forecast with the supplied observed result in a separate outcome review.
+
+## T64 — Bad outcome after a sound decision process
+Expected: assess the decision process using only the locked information set and original reasoning; assess the bad outcome separately. Do not infer poor reasoning from the outcome alone.
+
+## T65 — Good outcome after weak reasoning
+Expected: identify weak original reasoning from the contemporaneous record even though the outcome was good; state that success may have occurred by luck and do not use the result to upgrade the reasoning.
+
+## T66 — Insufficient data for a calibration metric
+Expected: do not calculate or claim a metric when forecasts, outcomes, comparability, or the eligible sample do not support it. State the sample and limitations or mark the metric `NOT ASSESSABLE`; do not impose a universal minimum sample or confidence claim.
+
+## T67 — Missing original forecasts
+Expected: mark forecast comparison `NOT ASSESSABLE`, name the missing original forecasts, and do not invent or retrospectively pass off a reconstruction as a contemporaneous forecast.
+
+## T68 — Invalidated assumption triggers reassessment
+Expected: compare the later evidence with the recorded assumption, mark it `FAILED` when supported, identify the recorded leading indicator or threshold that was reached, and surface the related reassessment trigger without changing the original record.
+
+## T69 — Later information cannot leak into the original assessment
+Expected: retain the original evidence and assumptions as recorded; place new outcome information only in the later review; assess the original reasoning without hindsight contamination.
+
+## T70 — Partial record when evidence is incomplete
+Expected: provide a copyable blank or partial record with missing fields labeled `NOT PROVIDED` or `NOT ASSESSABLE`; continue analysis supported by available information rather than blocking the workflow.

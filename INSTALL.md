@@ -31,8 +31,8 @@ Use `--personal` for the personal skill path.
 ## Local validation
 
 ```bash
-python scripts/validate.py
-python scripts/run_spec_eval.py
+python3 -B scripts/validate.py
+python3 -B scripts/run_spec_eval.py --offline-only
 ```
 
-The second command is a deterministic specification harness. It does not invoke Claude.
+These commands run offline checks and do not invoke Claude. Actual runtime verification requires captures from all ten scenarios; evaluate them with `python3 -B scripts/run_spec_eval.py --captures PATH`.

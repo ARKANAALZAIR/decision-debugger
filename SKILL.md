@@ -1179,7 +1179,34 @@ AVAILABLE AT DECISION TIME = ORIGINAL AUDIT EVIDENCE
 AVAILABLE AFTER DECISION   = SEPARATE LEARNING / OUTCOME EVIDENCE
 ```
 
-Later evidence can be used for learning, but not silently folded into the original reasoning assessment.
+For a decision with meaningful uncertainty or an observable outcome, create a copyable, user-controlled Decision Outcome Calibration Record in the Decision Ledger. Keep routine, low-stakes decisions concise. The record has two append-only parts:
+
+1. `decision_time_record` — created before or at the decision and locked after recording.
+2. `outcome_review` — added later without editing the decision-time record; all new information stays in this separate, append-only review.
+
+The decision-time record contains:
+- a stable `decision_id` and record date; assign the ID once and reuse it unchanged, using an opaque or neutral label that avoids sensitive details;
+- decision question, chosen option if known, and objective;
+- material assumptions, each explicitly labeled `USER-SUPPLIED ASSUMPTION` when supplied by the user;
+- evidence available at recording time, with its source/provenance and verification state;
+- expected outcomes and any forecast range or measurable prediction that the user can support;
+- relevant time horizon, observable leading indicators, reassessment thresholds, and unresolved uncertainties.
+
+Record probabilities only when the user supplies them or a defensible basis exists. Label user-supplied probabilities `USER-ESTIMATE`; never turn qualitative expectations into numbers. A forecast can remain qualitative or be marked `NOT PROVIDED` when no defensible measurable prediction exists. Do not fill missing fields with invented evidence, assumptions, or forecasts. Keep the original information set intact; corrections to a locked record are timestamped additions, not silent edits.
+
+When inputs are incomplete, provide a copyable blank or partially completed record with missing fields marked `NOT PROVIDED` or `NOT ASSESSABLE`, and continue any analysis supported by the available information.
+
+When original records and outcome evidence are supplied, append an outcome review that compares each forecast with the observed result and its source, marks each assumption `HELD`, `FAILED`, or `UNRESOLVED`, and each forecast `IN_RANGE`, `OUT_OF_RANGE`, or `NOT ASSESSABLE`. Identify whether recorded reassessment thresholds or leading indicators were reached, and state only lessons supported by the supplied evidence. Keep later information in this outcome-review part.
+
+Assess decision-process quality from the locked information set and original reasoning. Assess outcome quality separately from observed results. State explicitly that a bad outcome does not by itself establish poor reasoning, and a good outcome does not by itself establish sound reasoning; a good result can follow weak reasoning by luck. Do not judge the original reasoning using hindsight alone. Later information must not alter the locked decision-time record.
+
+For machine-readable outcome reviews, keep `decision_process_quality` and `outcome_quality` as separate explanations. Add `decision_process_quality_class` (`SOUND`, `WEAK`, `MIXED`, or `NOT ASSESSABLE`), `outcome_quality_class` (`GOOD`, `BAD`, `MIXED`, or `NOT ASSESSABLE`), and `decision_process_quality_basis: LOCKED_DECISION_TIME_RECORD` when assessable. These descriptive classes are not module statuses or probabilities. If the original reasoning record is missing, use `NOT ASSESSABLE`; do not infer a process class from the outcome.
+
+If the original record, forecast, or outcome is missing, mark the affected comparison or assessment `NOT ASSESSABLE`, name the gap, and continue any independent analysis. Never invent a forecast or outcome. A later recollection may be labeled `USER-RECONSTRUCTED AFTER DECISION`, but it is not a locked contemporaneous forecast and cannot support forecast calibration.
+
+For multiple completed records supplied together, identify recurring reasoning or forecasting patterns only when the records support them. Look for patterns such as optimistic timing estimates, omitted downside scenarios, repeated reliance on unverified assumptions, or weak reassessment discipline. Tie each pattern to the relevant decision IDs, counts, comparability limits, and evidence. Quantitative metrics are appropriate only when recorded forecasts, observed outcomes, and the sample are suitable for the metric (for example, range-coverage counts for comparable measurable forecasts or a Brier score for resolved binary probability forecasts). A Brier score is an outcome score and does not by itself establish calibration. Report the eligible sample and limitations; do not invent a universal minimum sample, precision, or statistical confidence. If those conditions are not met, give qualitative observations or mark the metric `NOT ASSESSABLE`.
+
+This is a manually maintained ledger. Do not imply persistent memory, automatic reminders, background monitoring, or access to prior decisions unless the runtime actually provides it. Tell users to save the record and supply it again for a later review. Minimize sensitive details.
 
 ---
 
@@ -1352,6 +1379,7 @@ Prioritize the most decision-relevant verification or action.
 
 Capture where appropriate:
 - timestamp
+- stable user-controlled decision identifier
 - decision state
 - framing
 - evidence state
@@ -1361,10 +1389,12 @@ Capture where appropriate:
 - reassessment triggers
 - chosen option, if one exists
 - unresolved issues
+- for meaningful uncertainty or observable outcomes, an append-only `decision_time_record` and separate `outcome_review` as specified in Post-Decision Review
+- when multiple completed records are supplied, optional cross-decision patterns or eligible calibration metrics linked to their record IDs
 
 Keep sensitive information to the minimum needed for the user's purpose.
 
-Do not retain or expose sensitive ledger content beyond the user's requested workflow. Where a persistence mechanism exists, use the minimum necessary retention period and avoid copying secrets, credentials, unrelated personal data, or sensitive third-party information into the ledger.
+The ledger is manually maintained and user-controlled. Do not claim that records persist across sessions, that reminders or monitoring will happen, or that earlier decisions are available unless the runtime actually provides that capability. Produce copyable records users can save and provide again. If a runtime actually provides persistence, use the minimum necessary retention period. Avoid secrets, unnecessary identifiers, unrelated personal data, and sensitive third-party information.
 
 ## 21. Audit Integrity Check
 
@@ -1482,7 +1512,11 @@ When machine-readable output is requested, use a stable machine-readable structu
   "decision_boundaries": [],
   "reassessment_triggers": [],
   "next_best_information": [],
-  "ledger": {}
+  "ledger": {
+    "decision_time_record": null,
+    "outcome_review": null,
+    "cross_decision_learning": null
+  }
 }
 ```
 

@@ -10,8 +10,9 @@ Every meaningful behavioral change should have a concrete reason and, where prac
 2. Create a deterministic test case.
 3. Update the skill rule or reference that should prevent the failure.
 4. Update examples if the change affects user-facing behavior.
-5. Run `python scripts/validate.py`.
-6. Run `python scripts/run_spec_eval.py`.
+5. Run `python3 -B scripts/validate.py`.
+6. Run `python3 -B scripts/run_spec_eval.py --offline-only`.
+7. For target-runtime verification, preserve the ten actual prompts and responses, then run `python3 -B scripts/run_spec_eval.py --captures PATH`.
 
 ## Good contributions
 

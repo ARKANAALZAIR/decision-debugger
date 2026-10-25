@@ -1,11 +1,15 @@
 {
   "name": "decision-debugger",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "distribution": "universal-standalone-agent-skill",
   "entrypoint": "SKILL.md",
   "claude_code_install": "scripts/install_claude_code.sh",
   "runtime_validation_claim": false,
-  "spec_eval_cases": 54,
-  "spec_eval_result": "PASS",
-  "skill_sha256": "264a03674df182aefaad19e6acd33127ac73e94ae8e6379a958ba6173608b514"
+  "spec_eval_cases": 62,
+  "spec_eval_mode": "offline structural checks and evaluator unit tests",
+  "spec_eval_result": "OFFLINE_PASS",
+  "capture_evaluator_unit_tests": 14,
+  "runtime_capture_evaluation_command": "python3 -B scripts/run_spec_eval.py --captures DIR",
+  "runtime_readiness": "BLOCKED_PENDING_ACTUAL_TARGET_CAPTURES",
+  "skill_sha256": "d0bccc6dc6cc592e632c556e8aadd0a93b838b7da806b4bf77b99488456c86a2"
 }

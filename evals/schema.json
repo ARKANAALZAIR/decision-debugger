@@ -98,10 +98,250 @@
       "type": "array"
     },
     "ledger": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "decision_time_record": {
+          "oneOf": [
+            {"$ref": "#/$defs/decisionTimeRecord"},
+            {"type": "null"}
+          ]
+        },
+        "outcome_review": {
+          "oneOf": [
+            {"$ref": "#/$defs/outcomeReview"},
+            {"type": "null"}
+          ]
+        },
+        "cross_decision_learning": {
+          "oneOf": [
+            {"$ref": "#/$defs/crossDecisionLearning"},
+            {"type": "null"}
+          ]
+        }
+      }
     },
     "second_order_effects": {
       "type": "array"
+    }
+  },
+  "$defs": {
+    "decisionTimeRecord": {
+      "type": "object",
+      "required": [
+        "decision_id",
+        "record_date",
+        "record_status",
+        "decision_question",
+        "chosen_option",
+        "objective",
+        "material_assumptions",
+        "evidence_available_at_record_time",
+        "expected_outcomes",
+        "time_horizon",
+        "leading_indicators",
+        "reassessment_thresholds",
+        "unresolved_uncertainties"
+      ],
+      "properties": {
+        "decision_id": {"type": "string", "minLength": 1},
+        "record_date": {"type": ["string", "null"]},
+        "record_status": {
+          "enum": ["PRE-DECISION", "USER-RECONSTRUCTED AFTER DECISION"]
+        },
+        "decision_question": {"type": "string"},
+        "chosen_option": {"type": ["string", "null"]},
+        "objective": {"type": ["string", "array"]},
+        "material_assumptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["statement", "provenance"],
+            "properties": {
+              "statement": {"type": "string"},
+              "provenance": {
+                "enum": ["USER-SUPPLIED ASSUMPTION", "INFERRED", "EXTERNAL"]
+              },
+              "verification": {"type": "string"}
+            }
+          }
+        },
+        "evidence_available_at_record_time": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "claim_or_observation": {"type": "string"},
+              "source": {"type": "string"},
+              "available_date": {"type": "string"},
+              "provenance": {"type": "string"},
+              "verification": {"type": "string"}
+            }
+          }
+        },
+        "expected_outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["prediction", "measure", "forecast_range", "horizon"],
+            "properties": {
+              "prediction": {"type": "string"},
+              "measure": {"type": ["string", "null"]},
+              "forecast_range": {
+                "type": ["string", "null", "array"],
+                "items": {"type": "number"},
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "horizon": {"type": ["string", "null"]},
+              "probability": {
+                "oneOf": [
+                  {"type": "null"},
+                  {
+                    "type": "object",
+                    "required": ["value", "provenance"],
+                    "properties": {
+                      "value": {"type": "number", "minimum": 0, "maximum": 1},
+                      "provenance": {
+                        "enum": ["USER-ESTIMATE", "EXTERNALLY SUPPORTED"]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "time_horizon": {"type": ["string", "null"]},
+        "leading_indicators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "indicator": {"type": "string"},
+              "observable_measure": {"type": "string"}
+            }
+          }
+        },
+        "reassessment_thresholds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "condition": {"type": "string"},
+              "source": {"type": "string"}
+            }
+          }
+        },
+        "unresolved_uncertainties": {"type": "array"}
+      }
+    },
+    "outcomeReview": {
+      "type": "object",
+      "properties": {
+        "review_date": {"type": "string"},
+        "assessment_status": {"enum": ["COMPLETED", "NOT ASSESSABLE"]},
+        "observed_outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "result": {"type": "string"},
+              "observed_date": {"type": "string"},
+              "source": {"type": "string"},
+              "evidence": {"type": "string"}
+            }
+          }
+        },
+        "later_information": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "information": {"type": "string"},
+              "learned_date": {"type": "string"},
+              "source": {"type": "string"}
+            }
+          }
+        },
+        "assumption_reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "assumption": {"type": "string"},
+              "assumption_id": {"type": "string"},
+              "result": {"enum": ["HELD", "FAILED", "UNRESOLVED"]},
+              "evidence": {"type": "string"}
+            }
+          }
+        },
+        "forecast_comparisons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "prediction": {"type": "string"},
+              "observed_result": {"type": ["string", "null"]},
+              "observed_numeric_value": {"type": ["number", "null"]},
+              "result": {"enum": ["IN_RANGE", "OUT_OF_RANGE", "NOT ASSESSABLE"]},
+              "evidence": {"type": "string"}
+            }
+          }
+        },
+        "reassessment_trigger_reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "trigger": {"type": "string"},
+              "trigger_id": {"type": "string"},
+              "result": {"enum": ["TRIGGERED", "NOT TRIGGERED", "NOT ASSESSABLE"]},
+              "evidence": {"type": "string"},
+              "response": {"type": "string"}
+            }
+          }
+        },
+        "decision_process_quality": {"type": "string"},
+        "decision_process_quality_class": {"enum": ["SOUND", "WEAK", "MIXED", "NOT ASSESSABLE"]},
+        "decision_process_quality_basis": {"enum": ["LOCKED_DECISION_TIME_RECORD"]},
+        "outcome_quality": {"type": "string"},
+        "outcome_quality_class": {"enum": ["GOOD", "BAD", "MIXED", "NOT ASSESSABLE"]},
+        "evidence_supported_lessons": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "crossDecisionLearning": {
+      "type": "object",
+      "properties": {
+        "decision_ids": {"type": "array", "items": {"type": "string"}},
+        "comparability_and_limitations": {"type": "string"},
+        "patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pattern": {"type": "string"},
+              "supporting_decision_ids": {"type": "array", "items": {"type": "string"}},
+              "observed_count": {"type": "integer", "minimum": 1},
+              "limitations": {"type": "string"}
+            }
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "value": {"type": ["number", "string", "null"]},
+              "eligible_sample_count": {"type": "integer", "minimum": 0},
+              "eligible_decision_ids": {"type": "array", "items": {"type": "string"}},
+              "method": {"type": "string"},
+              "limitations": {"type": "string"},
+              "status": {"enum": ["COMPUTED", "NOT ASSESSABLE"]}
+            }
+          }
+        }
+      }
     }
   }
 }

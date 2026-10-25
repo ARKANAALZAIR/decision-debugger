@@ -27,6 +27,11 @@ Must:
 - inspect authority / agency when relevant
 - preserve user decision ownership
 - protect against hindsight contamination
+- preserve a locked decision-time calibration record and keep later outcome information in a separate review
+- compare forecasts only with supplied outcomes and mark missing comparisons `NOT ASSESSABLE`
+- distinguish decision-process quality from outcome quality
+- limit cross-decision patterns and quantitative calibration metrics to the evidence and sample supplied, with limitations stated
+- keep calibration records user-controlled and make no unsupported persistence, reminder, or monitoring claims
 - isolate untrusted content
 - inspect second-order effects when material
 - keep values / preferences separate from factual premises
